@@ -1,0 +1,217 @@
+*{   
+  font-family: sans-serif;
+}
+
+.login-bg{
+  width:100%;
+  height: 100%;
+}
+
+
+.split {
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+  
+/* Control the left side */
+  .left {
+    left: 0;
+    width: 62%;
+    background: linear-gradient(-45deg, rgb(151, 44, 186),#e73c7e, purple);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+  }
+  @keyframes slide {
+    0% {
+      left: 0;
+      top: 0;
+    }
+    10% {
+      left: 80%;
+      top: 50%;
+    }
+    20% {
+      left: 50%;
+      top: 88%;
+    }30% {
+      left: 0%;
+      top: 30%;
+    }40% {
+      left: 60%;
+      top: 0%;
+    }50% {
+      left: 23%;
+      top: 88%;
+    }60% {
+      left: 0%;
+      top: 70%;
+    }70% {
+      left: 80%;
+      top: 10%;
+    }80% {
+      left: 60%;
+      top: 0%;
+    }90% {
+      left: 38%;
+      top: 88%;
+    }
+    100% {
+      left: 0;
+      top: 0;
+    }
+  }
+  .dvd {
+    position: absolute;
+    font-size: 70px;
+    color: #fff;
+    background-color: transparent;
+    animation: slide 50s ease-in-out infinite;
+  }
+
+
+
+  
+  /* Control the right side */
+  .right {
+    right: 0;
+    width: 38%;
+    display: block;
+  }
+
+.login-form{
+  display: block;
+  }
+
+.right h3{
+    font-size: 35px;
+}
+
+.appLogo{
+    width: 380px;
+    height: 380px;
+    padding-left: 20%;
+}
+
+
+.input-field {
+  display: block !important;
+  width: auto;
+  margin: auto;
+  margin-top: 1rem !important;
+  margin-left: 25% !important;
+}
+
+.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
+  width: 19em !important;
+}
+
+#submitBtn {
+    margin: 3% 36% ;
+    font-family: sans-serif; 
+    border: none;
+    border-radius: 21px;
+    color: white;
+    padding: 5px 70px ;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    background:  rgb(144, 1, 144);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    transition: 0.5s;
+  }
+  #submitBtn:hover {
+    background: rgb(120, 1, 120);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .form-labels{
+    margin: 0 0 0 25%;
+    padding-top: 3%;
+  }
+
+  .css-ahj2mt-MuiTypography-root:hover, #forgotPass:hover{
+    color: rgb(144, 1, 144); 
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+#forgotPass{
+    margin: 0 0 0 10%;
+    font-family: sans-serif;
+    font-size: 18px;
+    text-decoration: underline;
+}
+
+
+
+.popup-content{
+  margin:auto;
+  text-align: center;
+  background:#fff;
+  width:43em;
+  height: 28em;
+  padding:5px;
+  border:1px solid #d7d7d7}
+[role=tooltip]
+
+.popup-content{
+    width:200px;
+    box-shadow:0 0 3px rgba(0,0,0,.16);
+    border-radius:5px
+}
+.forgetForm{
+  text-align: center;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+
+#resetBtn {
+  margin: 6% 0% 0% 0%;
+  font-family: sans-serif; 
+  border: none;
+  border-radius: 21px;
+  color: white;
+  padding: 5px 45px 5px 50px ;
+  font-size: 15px;
+  background:  rgb(144, 1, 144);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  transition: 0.5s;
+}
+#resetBtn:hover {
+  background: rgb(120, 1, 120);
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+.popup-overlay{
+    background:rgba(0,0,0,.5);
+}
+
+[data-popup=tooltip]
+
+.popup-overlay{
+    background:transparent;
+  }
+
+
+
