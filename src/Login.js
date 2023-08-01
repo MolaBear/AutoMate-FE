@@ -125,7 +125,7 @@ export const Login = () => {
             color='primary' 
             onClick={loginUser}
         >
-            Submit</Button>
+            Login</Button>
 
 
 
