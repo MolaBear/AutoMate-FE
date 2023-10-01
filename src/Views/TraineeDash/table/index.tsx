@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react';
 import { User, fetchUsers } from '../../../Services/data/userApi';
 import React from 'react';
 import { SessionsTable, THead, TableCell, TableContainer, TableHeader, TableRow } from '../../../Components/Styled Components/AppStyle';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Avatar } from '../../../Components/Avatar';
+import PopUp from '../../../Components/Popup';
+import SignRegister from './SignLogic';
 
 const  Table = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isPopUpOpen, setPopUpOpen] = useState(false);
 
   useEffect(() => {
     fetchUsers()
@@ -23,6 +26,14 @@ const  Table = () => {
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
+  };
+
+  const signRegisterClick = () => {
+    setPopUpOpen(true);
+  };
+
+  const handleClosePopUp = () => {
+    setPopUpOpen(false);
   };
 
   return (
@@ -75,10 +86,20 @@ const  Table = () => {
                <TableCell>{user.dob.age}</TableCell>
                <TableCell>{user.registered.age}</TableCell>
                <TableCell>
-                   <button className='action-button'>
+                   <button 
+                      className='action-button' 
+                      onClick={signRegisterClick}
+                   >
                      Sign Here
                    </button>
-                
+                   <PopUp isOpen={isPopUpOpen} onClose={handleClosePopUp}>
+                    <div style={{ display: 'flex', justifyContent: 'right', alignItems: 'center' }}>
+                      <button onClick={handleClosePopUp}>
+                        <XMarkIcon className="h-6 w-6 text-gray-500" />
+                      </button>
+                    </div>
+                    <SignRegister/>
+                  </PopUp>
               
                </TableCell>
              </TableRow>
