@@ -1,0 +1,88 @@
+@keyframes moveGradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
+/* body{
+  background: linear-gradient(350deg, rgb(240, 223, 255), rgb(241, 226, 255), rgb(248, 239, 255));
+  background-size: 400% 400%;
+	animation: moveGradient 15s ease;
+} */
+
+h2 {
+  font-size: 28px;
+  margin-bottom: 0px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+
+th,
+td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #8800ff88;
+}
+
+th, thead {
+  background-color:  rgb(159 49 255);
+  color: white;
+}
+
+
+tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+td:nth-child(odd) {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#table-heading{
+  border-bottom: none;
+}
+
+.action-button {
+  background-color: #8800ff; /* Blue color */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-left: 10%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: #4e0191; /* Darker blue color on hover */
+}
+
+
+input#search-bar{
+  background: #fff;
+  border-radius: 16px;
+  border: none;
+  height: 26px;
+  width: 80%;
+  padding-left: 8%;
+  padding-right: 8%;
+}
+
+
+

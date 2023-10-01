@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "alwaysStrict": false,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": true,
+    "module": "esNext",
+    "moduleResolution": "node",
+    "target": "es2017",
+    "jsx": "preserve",
+    "resolveJsonModule": true,
+    "lib": [
+      "esnext",
+      "webworker",
+      "dom"
+    ],
+    "allowJs": true,
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "noEmit": true
+  },
+  "include": [
+    "src",
+    "types/index.d.ts",
+    "./typings.d.ts",
+    "../commons/src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "compiled",
+    "webpack",
+    "src/worker",
+    "../commons/src/**/*.native.js",
+    "../commons/src/**/*.native.jsx",
+    "../commons/src/**/*.native.ts",
+    "../commons/src/**/*.native.tsx"
+  ]
+}
