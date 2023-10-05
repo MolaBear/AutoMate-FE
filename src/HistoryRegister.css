@@ -1,0 +1,137 @@
+body {
+  color: #282c34;
+  background-color: white;
+  padding: 40px;
+  font-family: Sans-Serif;
+  width: 100%;
+  margin: 100% auto;
+ 
+}
+
+input {
+  background-color: transparent;
+  border-color: #282c34;
+  border-radius: 20px;
+  padding: 8px;
+  width: 12%;
+  margin-right: 84%;
+  margin-bottom: 20px;
+  
+}
+
+h1{
+  margin: 15px;
+  margin-bottom: 30px;
+  margin-left: 5px;
+  
+}
+
+table{
+  width: 95%;
+  table-layout: fixed;
+  border-spacing: 0;
+  border: 1px solid black;
+  margin-bottom: 600px;
+  
+
+  tr {
+    :last-child {
+      td {
+        border-bottom: 0;
+      }
+    }
+  }
+}
+
+th,
+td {
+  padding: 0.5rem;
+  text-align: left;
+  font-weight: 500;
+  font-size: 17px;
+  border-bottom: 1px solid black;
+}
+
+th {
+  
+  border-bottom: 2px solid black;
+  color: black;
+  font-weight: bold;
+}
+
+href a{
+  color: black;
+}
+
+@media (max-width: 700px) {
+  
+  .session_body{
+    margin: auto;
+    margin-bottom: 60px;
+    font-size: 22px;
+  }
+
+  table {
+    
+    table-layout: 100%;
+    font-size: 12px;
+    
+  }
+
+  th, td {
+    padding: 0.5rem;
+    text-align: left;
+    font-weight: 500px;
+    font-size: 17px;
+    border-bottom: 1px solid black;
+  }
+}
+
+/* Register css*/
+.rtable{
+  width: 100%;
+  table-layout: fixed;
+  border: none;
+
+}
+
+.register{
+  margin: 90px;
+  margin-bottom: 600px;
+}
+
+.heading{
+  text-align: center;
+  font-size: 50px;
+
+}
+
+
+@media (max-width: 700px) { /* Adjust the breakpoint as needed */
+  .rtable {
+    
+    table-layout: auto;
+    font-size: 12px;
+    
+  }
+  .register{
+    margin: auto;
+    margin-bottom: 60px;
+    font-size: 22px;
+  }
+  
+  .heading{
+    text-align: center;
+    font-size: 40px;
+  
+  }
+  th, td {
+    padding: 0.5rem;
+    text-align: left;
+    font-weight: 500px;
+    font-size: 17px;
+    border-bottom: 1px solid black;
+    
+  }
+  /* Add more styles to adapt the table as needed */
+}
