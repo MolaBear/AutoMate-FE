@@ -8,6 +8,7 @@ import React, { Fragment } from 'react';
 const InnerNav = () => {
   const location = useLocation();
   const isOnSession = location.pathname.startsWith('/admin/session');
+  const isOnTrainerSession = location.pathname.startsWith('/trainer/session');
   const isOnUser = location.pathname.startsWith('/admin/user');
     return (
         <div style={{marginLeft: '250px'}}>
@@ -34,6 +35,20 @@ const InnerNav = () => {
                             </SessionNavLink>
                         </Fragment>
                             )}
+                            {isOnTrainerSession && (
+                                <Fragment>
+                                    <SessionNavLink to="view">
+                                        <div className="flex-container">
+                                            View Sessions
+                                        </div>
+                                    </SessionNavLink>
+                                    <SessionNavLink to="history">
+                                        <div className="flex-container">
+                                            Session History
+                                        </div>
+                                    </SessionNavLink>
+                                </Fragment>
+                                    )}
                         {isOnUser && (
                         <Fragment>
                             <SessionNavLink to="view">

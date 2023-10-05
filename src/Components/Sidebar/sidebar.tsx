@@ -1,5 +1,5 @@
 // Sidebar.tsx
-import React from 'react';
+import React, { Fragment } from 'react';
 import { SidebarContainer, SidebarLink, SidebarHeader, SidebarLinkExit } from './sidebarStyle';
 import { useLocation } from 'react-router-dom';
 import { AcademicCapIcon, ArrowLeftOnRectangleIcon, CalendarDaysIcon, HomeIcon, PhoneIcon, UserGroupIcon } from '@heroicons/react/24/outline';
@@ -10,6 +10,7 @@ import { LogoContainer, LogoImage } from '../Styled Components/AppStyle';
 const Sidebar: React.FC = () => {
   const location = useLocation();
   const isOnAdminRoute = location.pathname.startsWith('/admin');
+  const isTrainerRoute = location.pathname.startsWith('/trainer');
 
   return (
     <SidebarContainer>
@@ -26,18 +27,21 @@ const Sidebar: React.FC = () => {
           <span className="ml-2">Sessions</span>
         </div>
       </SidebarLink>
-      <SidebarLink to="calendar" >
-        <div className="flex items-center">
-        <CalendarDaysIcon className="h-6 w-6 text-white-500" />
-          <span className="ml-2">Calendar</span>
-        </div>
-      </SidebarLink>
+      {isTrainerRoute &&(
+      <Fragment>
+        <SidebarLink to="calendar" >
+          <div className="flex items-center">
+          <CalendarDaysIcon className="h-6 w-6 text-white-500" />
+            <span className="ml-2">Calendar</span>
+          </div>
+        </SidebarLink>
       <SidebarLink to="contact" >
         <div className="flex items-center">
           <PhoneIcon className="h-5 w-5 text-white-500" />
           <span className="ml-2">Contact</span>
         </div>
       </SidebarLink>
+      </Fragment>)}
       {isOnAdminRoute && (
       <SidebarLink to="users/view">
         <div className="flex items-center">

@@ -21,9 +21,8 @@ interface TableContainerProps{
 
 export const InputField1 = styled.input<InputFieldProps>`
 padding: 8px 22px;
-width: ${(props) => (props.width ? `${props.height}` : '')};
+width: ${(props) => (props.width ? `${props.width}` : '80%')};
 display: block;
-margin-bottom:20px;
 border-radius: 11px;
 box-sizing: border-box;
 border: 1.5px solid #615959;
@@ -56,7 +55,7 @@ font-family: "Roboto","Helvetica","Arial",sans-serif;
 
   export const UserRoleSelect = styled.select<InputFieldProps>`
 padding: 8px 22px;
-width: ${(props) => (props.width ? `${props.height}` : '')};
+width: ${(props) => (props.width ? `${props.width}` : '80%')};
 display: block;
 margin-bottom:20px;
 border-radius: 11px;
@@ -93,6 +92,16 @@ export const Label1 = styled.label`
     padding-top: 12px;
     margin-bottom:1%;
   `;
+
+export const FormField = styled.div`
+    font-family: unset;
+    padding-top: 5px;
+    margin-bottom:1%;
+  `;
+export const FormLabel = styled.label`
+  display: block;
+  font-weight: bold;
+`;
 
 export const RadioContainer = styled.div`
 display: flex;
@@ -159,13 +168,13 @@ export const DescriptionSesction = styled.textarea`
 `;
 
 export const Card = styled.div`
+  padding: 20px;
   box-shadow: 1px 4px 8px 6px rgba(0,0,0,0.2);
   transition: 0.3s;
   width: 90%;
   border-radius: 5px;
   margin: auto;
   margin-top: 3%;
-  padding 20px;
   background: #ffffff94;
 
 &:hover{

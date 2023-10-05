@@ -4,7 +4,7 @@ import React from "react";
 import EditSessionTable from "../Views/AdminDash/SessionsTable";
 import InnerNav from "../Components/InnerNav";
 import CreateSession from "../Views/AdminDash/SessionsTable/CreateSession";
-//import SessionHistory from "../Views/AdminDash/SessionsTable/SessionHistory";
+import SessionHistoryTable from "../Views/AdminDash/SessionsTable/SessionHistory/SessionHistory";
 
 
 const SessionsLayout = () => {
@@ -18,14 +18,13 @@ const SessionsLayout = () => {
             <Routes>
                 <Route path="view" element={<EditSessionTable/>}/>
                 <Route path="create" element={<CreateSession/>}/>
-                {/* <Route path="history" element={<SessionHistory/>}/> */}
+                <Route path="history" element={<SessionHistoryTable/>}/>
             </Routes>)}
             
         {isOnTrainerRoute && (
             <Routes>
-                <Route path="/" element={<EditSessionTable/>}/>
-                <Route path="create" element={<EditSessionTable/>}/>
-                <Route path="create" element={<EditSessionTable/>}/>
+                <Route path="/view" element={<EditSessionTable/>}/>
+                <Route path="history" element={<SessionHistoryTable/>}/>
             </Routes>)}
         </div>
     );

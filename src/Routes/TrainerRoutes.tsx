@@ -3,6 +3,8 @@ import TrainerLayout from "../Layouts/TrainerLayout";
 import React from "react";
 import TrainerBoard from "../Views/TrainerDash";
 import Blank from "./Blank";
+import CalendarPage from "../Components/Calendar";
+import SessionsLayout from "../Layouts/SessionsLayout";
 
 
 const TraineerRoutes = () => {
@@ -10,10 +12,9 @@ const TraineerRoutes = () => {
         <TrainerLayout>
             <Routes>
                 <Route path="home" element={<TrainerBoard/>}/>
-                <Route path="sessions" element={<Blank/>}/>
-                <Route path="about" element={<Blank/>}/>
+                <Route path="sessions/*" element={<SessionsLayout/>}/>
+                <Route path="calendar" element={<CalendarPage/>}/>
                 <Route path="contact" element={<Blank/>}/>
-                <Route path="users" element={<Blank/>}/>
             </Routes>
         </TrainerLayout>
     );

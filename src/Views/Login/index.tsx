@@ -11,6 +11,8 @@ import {
   import { useNavigate } from "react-router-dom";
   import { useEffect, useRef, useState } from "react";
 import React from "react";
+import Popup from "reactjs-popup";
+import { InputField1, UserRoleSelect } from "../../Components/Styled Components/AppStyle";
   
 
   const Login = () => {
@@ -19,6 +21,11 @@ import React from "react";
     const [securityQ, setSecurityQ] = useState("");
     const [securityAns, setSecurityAns] = useState("");
     const navigate = useNavigate();
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      console.log(empID);
+  }
 
     const imgRef = useRef<HTMLImageElement>(null);
 
@@ -33,7 +40,7 @@ import React from "react";
     //Validation (Trainer, Trainee, Admin)
     const loginUser = () => {
       if (empID === "Trainee" && pass === "1234") {
-        navigate("trainee");
+        navigate("setpass");
       } else if (empID === "Trainer" && pass === "0000") {
         console.log("trainer in, take me to home");
         navigate("trainer/home");
@@ -81,17 +88,48 @@ import React from "react";
               variant="outlined"
             />
   
-            <div className="form-labels">
+            {/* <div className="form-labels">
               <FormControlLabel
                 control={<Checkbox color="secondary" />}
                 label="Remember Me"
                 color="secondary"
               />
-            </div>
+            </div> */}
   
-            <Button id="submitBtn" color="primary" onClick={loginUser}>
+            <Button 
+              style={{marginBottom: "25px"}} 
+              id="submitBtn" 
+              color="primary" 
+              onClick={loginUser}
+            >
               Submit
             </Button>
+
+            
+            <Popup trigger={<label id="forgotPass" style={{marginLeft: "60%", marginTop:"10px"}}>forgot password</label>} modal nested>
+              <div className='modal'>
+                <div className='content'>
+                  <form onSubmit={handleSubmit} className="forgetForm">
+                    <h2>Forgot Password</h2>
+                    <label>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    </label>
+                    <br/><br/>
+                    <InputField1 value={empID} onChange={(e) => setEmpID(e.target.value)} type="text" placeholder="Employee ID" id="empID" name="empID" width="100%" />
+                    <br/>
+                    <UserRoleSelect value={securityQ} onChange={(e) => setSecurityQ(e.target.value)} name="SecurityQ" id="SecurityQ" width="100%">
+                      <option value="" disabled>Security Question</option>
+                      <option value="Q1">Question 1</option>
+                      <option value="Q2">Question 2</option>
+                      <option value="Q3">Question 3</option>
+                      <option value="Q4">Question 4</option>
+                    </UserRoleSelect>
+                    <InputField1 value={securityAns} onChange={(e) => setSecurityAns(e.target.value)} type="text" placeholder="Security Question Answer" id="securityAns" name="securityAns" width="100%"/>
+                    <button type="submit" id="submitBtn">Reset Password</button> 
+                  </form> 
+                </div>
+              </div>
+            </Popup>
           </form>
         </div>
       </>
