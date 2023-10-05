@@ -1,6 +1,4 @@
-// src/components/OnlineUsersView.tsx
 import React, { useState, useEffect } from 'react';
-import './OnlineUsersView.css'; // Import the CSS file
 import { AdminUsersView, Card, SessionsTable, StyledCheckbox, StyledSelect } from '../../../Components/Styled Components/AppStyle';
 
 interface UserItem {

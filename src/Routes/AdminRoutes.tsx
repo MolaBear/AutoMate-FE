@@ -1,11 +1,12 @@
-import { Outlet, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import AdminLayout from "../Layouts/AdminLayout";
 import Blank from "./Blank";
 import AdminBoard from "../Views/AdminDash";
 import React from "react";
 import OnlineUsersView from "../Views/AdminDash/Users/OnlineUsers";
 import CalendarPage from "../Components/Calendar";
-import EditSessionTable from "../Views/AdminDash/SessionsTable";
+import SessionsLayout from "../Layouts/SessionsLayout";
+import UserLayout from "../Layouts/UsersLayout";
 
 
 const AdminRoutes = () => {
@@ -13,10 +14,10 @@ const AdminRoutes = () => {
         <AdminLayout>
             <Routes>
                 <Route path="home" element={<AdminBoard/>}/>
-                <Route path="sessions" element={<EditSessionTable/>}/>
+                <Route path="sessions/*" element={<SessionsLayout/>}/>
                 <Route path="calendar" element={<CalendarPage/>}/>
                 <Route path="contact" element={<Blank/>}/>
-                <Route path="users" element={<OnlineUsersView/>}/>
+                <Route path="users/*" element={<UserLayout/>}/>
             </Routes>
         </AdminLayout>
     );

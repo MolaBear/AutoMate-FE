@@ -9,9 +9,7 @@ import {
     TextField,
   } from "@mui/material";
   import { useNavigate } from "react-router-dom";
-//   import Popup from "reactjs-popup";
-  //import logo from "../img/Logo.gif";
-  import { useState } from "react";
+  import { useEffect, useRef, useState } from "react";
 import React from "react";
   
 
@@ -21,6 +19,16 @@ import React from "react";
     const [securityQ, setSecurityQ] = useState("");
     const [securityAns, setSecurityAns] = useState("");
     const navigate = useNavigate();
+
+    const imgRef = useRef<HTMLImageElement>(null);
+
+    useEffect(() => {
+      if (imgRef.current) {
+        const img = imgRef.current;
+        img.setAttribute('width', img.width.toString());
+        img.setAttribute('height', img.height.toString());
+      }
+    }, []);
   
     //Validation (Trainer, Trainee, Admin)
     const loginUser = () => {
@@ -28,8 +36,9 @@ import React from "react";
         navigate("trainee");
       } else if (empID === "Trainer" && pass === "0000") {
         console.log("trainer in, take me to home");
-        navigate("trainer");
+        navigate("trainer/home");
       } else if (empID === "Admin" && pass === "1111") {
+        navigate("admin/home");
         console.log("admin clocking in, take me to home");
       } else {
         console.log("invalid user");
@@ -45,7 +54,12 @@ import React from "react";
   
         <div className="split right">
           <form className="login-form">
-            {/* <img src={logo} className="appLogo" alt="logo" /> */}
+            <img 
+             ref={imgRef}
+             src="/Logo.gif"
+             className="appLogo"
+             alt="logo"
+                />
   
             <TextField
               className="input-field"

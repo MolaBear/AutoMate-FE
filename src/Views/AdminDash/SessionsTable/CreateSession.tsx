@@ -1,105 +1,104 @@
-import React, { useEffect, useState } from 'react'
-import { AddButton, AddUserInputField, Button, CancelSessionButton, DescriptionSesction, InputField1, Label1, RemoveButton, SessionName, SessionTableCell, SessionsTable, THead, TableContainer, TableHeader, TableRow } from '../../../Components/Styled Components/AppStyle'
+import { useEffect, useState} from 'react'
+import { User, fetchUsers } from '../../../Services/data/userApi';
+import { AddButton, AddUserInputField, Button, CancelSessionButton, Card, DescriptionSesction, InputField1, Label1, RemoveButton, SessionName, SessionTableCell, SessionsCard, SessionsTable, THead, TableContainer, TableHeader, TableRow } from '../../../Components/Styled Components/AppStyle'
 import { PlusCircleIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { DatePicker, Space } from 'antd';
-import { User, fetchUsers } from '../../../Services/data/userApi';
 
-const { RangePicker } = DatePicker;
+const  CreateSession: React.FC = () => {
 
-const EditSessionForm = () => {
+  const [users, setUsers] = useState<User[]>([]);
 
-    const [users, setUsers] = useState<User[]>([]);
+  useEffect(() => {
+    fetchUsers()
+      .then((response) => setUsers(response.data.results))
+      .catch((error) => console.error(error));
+  }, []);
 
-    useEffect(() => {
-      fetchUsers()
-        .then((response) => setUsers(response.data.results))
-        .catch((error) => console.error(error));
-    }, []);
-      
-    const handleAddUser = () => {
-      const newResult: User = {
-        gender: '',
-        name: {
-          title: '',
-          first: '',
-          last: '',
-        },
-        location: {
-          street: {
-            number: 0,
-            name: '',
-          },
-          city: '',
-          state: '',
-          country: '',
-          postcode: 0,
-          coordinates: {
-            latitude: '',
-            longitude: '',
-          },
-          timezone: {
-            offset: '',
-            description: '',
-          },
-        },
-        email: '',
-        login: {
-          uuid: '',
-          username: '',
-          password: '',
-          salt: '',
-          md5: '',
-          sha1: '',
-          sha256: '',
-        },
-        dob: {
-          date: '',
-          age: 0,
-        },
-        registered: {
-          date: '',
-          age: 0,
-        },
-        phone: '',
-        cell: '',
-        id: {
-          name: '',
-          value: '',
-        },
-        picture: {
-          large: '',
-          medium: '',
-          thumbnail: '',
-        },
-        nat: '',
-      };
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const formData = new FormData(e.target as HTMLFormElement);
+      console.log(formData)
+    };
     
-        setUsers([...users, newResult]);
+  const handleAddUser = () => {
+    const newResult: User = {
+      gender: '',
+      name: {
+        title: '',
+        first: '',
+        last: '',
+      },
+      location: {
+        street: {
+          number: 0,
+          name: '',
+        },
+        city: '',
+        state: '',
+        country: '',
+        postcode: 0,
+        coordinates: {
+          latitude: '',
+          longitude: '',
+        },
+        timezone: {
+          offset: '',
+          description: '',
+        },
+      },
+      email: '',
+      login: {
+        uuid: '',
+        username: '',
+        password: '',
+        salt: '',
+        md5: '',
+        sha1: '',
+        sha256: '',
+      },
+      dob: {
+        date: '',
+        age: 0,
+      },
+      registered: {
+        date: '',
+        age: 0,
+      },
+      phone: '',
+      cell: '',
+      id: {
+        name: '',
+        value: '',
+      },
+      picture: {
+        large: '',
+        medium: '',
+        thumbnail: '',
+      },
+      nat: '',
     };
   
-    const handleRemoveUser = (userId) => {
-      const updatedRows = users.filter((user) => user.id.value !== userId);
-      setUsers(updatedRows);
-    };
-  
-    const handleCancelSession = () => {
-      console.log("session cancelled");
-    };
+      setUsers([...users, newResult]);
+  };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const formData = new FormData(e.target as HTMLFormElement);
-        console.log(formData)
-      };
+  const handleRemoveUser = (userId) => {
+    const updatedRows = users.filter((user) => user.id.value !== userId);
+    setUsers(updatedRows);
+  };
 
-  return (
-    <form onSubmit={handleSubmit}  style={{ width: '100%'}}>
-        <h2>Edit Session</h2>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <SessionName placeholder={'Session Name'}></SessionName>
+  const handleCancelSession = () => {
+    console.log("session cancelled");
+  };
+
+return (
+  <div style={{marginLeft: '250px'}}>
+    <SessionsCard>
+        <h2>Create Session</h2>
+    <form onSubmit={handleSubmit} >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+          <SessionName placeholder={'Session Name'}></SessionName>
           <CancelSessionButton onClick={handleCancelSession}>Cancel Session</CancelSessionButton>
         </div>
-        <br/>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
                     <Label1>Date:</Label1><br/>
@@ -107,12 +106,11 @@ const EditSessionForm = () => {
                 </div>
                 <div>
                     <Label1>Start:</Label1>
-                    <DatePicker picker='time'/> 
+                    <DatePicker picker='time'/>
                     <Label1>End:</Label1>
                     <DatePicker picker='time'/>
                 </div>
             </div>
-        <br/>
         <br/>
         <TableContainer margin='0px' maxHeight='20em'>
             <SessionsTable>
@@ -193,7 +191,9 @@ const EditSessionForm = () => {
         <Button type="submit">Save Changes</Button>
         </div>
     </form>
+    </SessionsCard>
+  </div>
   )
-}
+};
 
-export default EditSessionForm
+export default CreateSession;

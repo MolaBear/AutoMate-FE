@@ -20,7 +20,7 @@ const Sidebar: React.FC = () => {
           <span className="ml-2">Home</span>
         </div>
       </SidebarLink>
-      <SidebarLink to="sessions">
+      <SidebarLink to="sessions/view">
         <div className="flex items-center">
           <AcademicCapIcon className="h-5 w-5 text-white-500" />
           <span className="ml-2">Sessions</span>
@@ -39,7 +39,7 @@ const Sidebar: React.FC = () => {
         </div>
       </SidebarLink>
       {isOnAdminRoute && (
-      <SidebarLink to="users">
+      <SidebarLink to="users/view">
         <div className="flex items-center">
           <UserGroupIcon className="h-5 w-5 text-white-500" />
           <span className="ml-2">Users</span>

@@ -78,7 +78,7 @@ export interface User {
   }
   
 
-export const fetchUsers = (count = 50) => get("", { results: count });
+export const fetchUsers = (count = 5) => get("", { results: count });
 export const createUser = (userData) => post('/users', userData);
 export const updateUser = (userId, userData) => put(`/users/${userId}`, userData);
 export const deleteUser = (userId) => del(`/users/${userId}`);

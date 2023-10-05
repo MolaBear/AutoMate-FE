@@ -14,16 +14,15 @@ interface ButtonProps{
   padding?: string;
 }
 
-interface TableCellProps{
-  backgroundColor?:string;
+interface TableContainerProps{
+  margin?:string;
+  maxHeight?:string;
 }
 
 export const InputField1 = styled.input<InputFieldProps>`
 padding: 8px 22px;
-width: ${(props) => (props.width ? `${props.height}` : '100%')};
-height: 6vh;
+width: ${(props) => (props.width ? `${props.height}` : '')};
 display: block;
-margin: auto;
 margin-bottom:20px;
 border-radius: 11px;
 box-sizing: border-box;
@@ -32,7 +31,6 @@ transition-duration: 0.5s;
 transition-timing-function: ease;
 outline: none;
 font-family: "Roboto","Helvetica","Arial",sans-serif;
-font-size: 14px;
   height: ${(props) => (props.height ? `${props.height}` : '')};
   font-size: ${(props) => (props.fontSize ? `${props.fontSize}` : '18px')};
 
@@ -53,7 +51,41 @@ font-size: 14px;
     &:focus::placeholder{
       color: #4e0191;
     }
+  `;
 
+
+  export const UserRoleSelect = styled.select<InputFieldProps>`
+padding: 8px 22px;
+width: ${(props) => (props.width ? `${props.height}` : '')};
+display: block;
+margin-bottom:20px;
+border-radius: 11px;
+box-sizing: border-box;
+border: 1.5px solid #615959;
+transition-duration: 0.5s;
+transition-timing-function: ease;
+outline: none;
+font-family: "Roboto","Helvetica","Arial",sans-serif;
+  height: ${(props) => (props.height ? `${props.height}` : '')};
+  font-size: ${(props) => (props.fontSize ? `${props.fontSize}` : '18px')};
+
+    &:hover {
+    border: 1px solid rgb(109 4 203/ 82%);
+    cursor: pointer;
+    background: transparent;  
+    box-shadow: 1px 2px 4px 3px rgba(0,0,0,0.2);
+    }
+    &:hover::placeholder{
+      color: rgb(109 4 203/ 82%);
+    }
+    &:focus{
+      border: 2px solid rgb(109 4 203/ 65%);
+    background: transparent;  
+    box-shadow: 1px 2px 6px 4px rgba(0,0,0,0.2);
+    }
+    &:focus::placeholder{
+      color: #4e0191;
+    }
   `;
 
 export const Label1 = styled.label`
@@ -97,6 +129,35 @@ export const RadioInput = styled.input`
 }
 `;
 
+export const SessionName = styled.input`
+  font-size:23px;
+`;
+export const CancelSessionButton = styled.button`
+ &:hover{
+  color: blueviolet;
+ }
+`;
+
+export const AddUserInputField = styled.input`
+ height:2em;
+ margin:0;
+ z-index:999;
+`;
+
+export const SessionTableCell = styled.td`
+border-bottom: 1px solid lightgrey;
+padding: 0px 12px;
+`;
+
+export const DescriptionSesction = styled.textarea`
+  margin-top: 20px;
+  padding: 10px;
+  height: 120px;
+  width: 100%;
+  border: 1px solid #adadad;
+  border-radius: 5px;
+`;
+
 export const Card = styled.div`
   box-shadow: 1px 4px 8px 6px rgba(0,0,0,0.2);
   transition: 0.3s;
@@ -104,6 +165,26 @@ export const Card = styled.div`
   border-radius: 5px;
   margin: auto;
   margin-top: 3%;
+  padding 20px;
+  background: #ffffff94;
+
+&:hover{
+  box-shadow: 2px 6px 14px 10px rgba(0,0,0,0.2);
+}
+
+.head-content{
+  text-align: center;
+  display: grid;
+  margin-top:5%;
+}
+`;
+export const SessionsCard = styled.div`
+  box-shadow: 1px 4px 8px 6px rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 90%;
+  padding:20px;
+  border-radius: 5px;
+  margin: 20px;
   background: #ffffff94;
 
 &:hover{
@@ -285,18 +366,51 @@ export const NavigationStyledDiv = styled.div`
 `;
 
 /////////////////////////////////////////////////////////////////////////
+///////////////////////////SessionNav Style///////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+
+
+export const SessionNavLink = styled(NavLink)`
+  display: none; /* Hidden by default on small screens */
+  transition: linear 0.3s;
+  color: #979797;
+
+  &:hover{
+    color:black;
+    text-decoration: underline;
+  }
+
+  &.active {
+    color:black;
+    text-decoration: underline;
+  }
+
+
+  @media (min-width: 640px) {
+    margin-inline: 1.5rem; /* Adjust the margin for small screens */
+    display: block; /* Display as a block on screens wider than 640px */
+    
+    /* Define your styles for the "flex space-x-4" container within the div */
+    .flex-container {
+      display: flex;
+      gap: 1.5rem; 
+    }
+  }
+`;
+
+/////////////////////////////////////////////////////////////////////////
 ///////////////////////////Table Style///////////////////////////////////
 /////////////////////////////////////////////////////////////////////////
 
 // Create a styled component for the table container
-export const TableContainer = styled.div`
+export const TableContainer = styled.div<TableContainerProps>`
   font-family: Arial, sans-serif;
   background-color: #f5f5f5;
-  padding: 20px;
+  margin: ${(props) => (props.margin ? `${props.margin}` : '20px')};
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  overflow: auto; /* Add this to make the container scrollable */
-  max-height: 35em; /* Add a maximum height to enable vertical scrolling */
+  overflow-y: scroll; /* Add this to make the container scrollable */
+  max-height: ${(props) => (props.maxHeight ? `${props.maxHeight}` : '35em')}; /* Add a maximum height to enable vertical scrolling */
 `;
 
 
@@ -316,8 +430,9 @@ export const TableHeader = styled.th`
 `;
 
 export const THead = styled.thead`
-  position: sticky; /* Make the header sticky */
-  top: 0; /* Stick it to the top of the container */
+  position: sticky;
+  top: 0;
+  z-index: 10;
 `;
 
 
@@ -365,11 +480,17 @@ export const SearchBarInput = styled.input`
   border-radius: 16px;
   border: none;
   height: 26px;
-  width: 80%;
+  width: 100%;
   padding-left: 8%;
   padding-right: 8%;
 `;
 
-
-
-
+export const AddButton = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 12px 0px;
+  `;
+  
+export const RemoveButton = styled.button`
+    margin: 20px;
+  `;

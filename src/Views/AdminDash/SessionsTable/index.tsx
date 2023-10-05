@@ -37,9 +37,7 @@ const  EditSessionTable = () => {
   };
 
   return (
-    <div style={{
-      padding: '20px 20px 0px 300px'
-  }}>
+    <div style={{marginLeft: '250px'}}>
       <TableContainer>
          <SessionsTable>
          <THead>
@@ -68,7 +66,7 @@ const  EditSessionTable = () => {
              <TableHeader>DATE</TableHeader>
              <TableHeader>START</TableHeader>
              <TableHeader>END</TableHeader>
-             <TableHeader>Sign register</TableHeader>
+             <TableHeader></TableHeader>
            </tr>
          </THead>
          <tbody>

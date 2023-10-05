@@ -14,18 +14,20 @@ const PopUpWrapper = styled.div<{ isOpen: boolean }>`
   left: 0;
   width: 100%;
   height: 100%;
+  overflow-y: scroll;
   background-color: rgb(112 112 112 / 1%);
   display: ${(props) => (props.isOpen ? 'block' : 'none')};
   z-index: 1000;
 `;
 
 const PopUpContent = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  // position: absolute;
+  // top: 50%;
+  // left: 50%;
+  // transform: translate(-50%, -50%);
   background-color: white;
   padding: 20px;
+  margin: 45px;
   border-radius: 5px;
   box-shadow: 0 0 2px rgb(159 49 255 / 9%);
 `;
