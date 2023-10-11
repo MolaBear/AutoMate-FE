@@ -17,7 +17,7 @@ export const PageRoutes = () => {
       <Route
         path="/trainee/*"
         element={
-          <ProtectedRoute component={<TraineeRoutes />}/>
+          <ProtectedRoute component={TraineeRoutes}/>
         }
       />
       <Route path="/trainer/*" element={<TrainerRoutes />} />
