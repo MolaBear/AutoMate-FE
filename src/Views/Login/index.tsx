@@ -5,7 +5,12 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-// import jwt from 'jsonwebtoken';
+import jwt_decode from "jwt-decode";
+
+interface JwtPayload {
+  RoleName: string;
+  exp: number;
+}
 
 const API_URL = 'https://localhost:7184/api/User/LoginUser'; 
 const Login: React.FC = () => {
@@ -27,7 +32,17 @@ const Login: React.FC = () => {
         const { jwtTokenKey } = message;
         // const decondedToken = jwt.decode(jwtTokenKey);
         localStorage.setItem('jwtToken', jwtTokenKey);
-        navigate('/trainee/home'); 
+        
+        const decodedToken = jwt_decode<JwtPayload>(jwtTokenKey);
+        const userRole = decodedToken.RoleName
+        if (userRole === 'Admin'){
+            navigate('admin/sessions/view');
+        }else if (userRole === 'Trainer') {
+          navigate('/trainer/sessions/view');
+        }else if (userRole === 'Trainee') {
+          navigate('/trainee/home');
+        }
+
       } else {
         console.log('Invalid credentials');
       }

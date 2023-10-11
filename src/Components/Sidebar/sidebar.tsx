@@ -12,6 +12,10 @@ const Sidebar: React.FC = () => {
   const isOnAdminRoute = location.pathname.startsWith('/admin');
   const isTrainerRoute = location.pathname.startsWith('/trainer');
 
+  const handleLogout = () => {
+    localStorage.clear();
+  };
+
   return (
     <SidebarContainer>
       <SidebarHeader>AutoMate</SidebarHeader>
@@ -49,7 +53,7 @@ const Sidebar: React.FC = () => {
           <span className="ml-2">Users</span>
         </div>
       </SidebarLink>)}
-      <SidebarLinkExit to="/">
+      <SidebarLinkExit to="/" onClick={handleLogout} >
         <div className="flex items-center">
           <ArrowLeftOnRectangleIcon className="h-5 w-5 text-white-500" />
           <span className="ml-2">Exit</span>

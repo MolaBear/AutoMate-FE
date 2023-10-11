@@ -1,7 +1,5 @@
 import React from "react";
-import TraineeDashBoard from "../Views/TraineeDash";
 import { Route, Router, Routes } from "react-router-dom";
-import Blank from "./Blank";
 import Login from "../Views/Login";
 import AdminRoutes from "./AdminRoutes";
 import TraineeRoutes from "./TraineeRoutes";
@@ -17,11 +15,27 @@ export const PageRoutes = () => {
       <Route
         path="/trainee/*"
         element={
-          <ProtectedRoute component={TraineeRoutes}/>
+          <ProtectedRoute requiredRole="Trainee">
+            <TraineeRoutes/>
+          </ProtectedRoute>
         }
       />
-      <Route path="/trainer/*" element={<TrainerRoutes />} />
-      <Route path="/admin/*" element={<AdminRoutes />} />
+      <Route
+        path="/trainer/*"
+        element={
+          <ProtectedRoute requiredRole="Trainer">
+            <TrainerRoutes />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/*"
+        element={
+          <ProtectedRoute requiredRole="Admin">
+            <AdminRoutes />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 };

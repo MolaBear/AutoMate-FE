@@ -9,7 +9,7 @@ const TraineerRoutes = () => {
     return (
         <TraineeLayout>
             <Routes>
-                <Route path="" element={<TraineeDashBoard/>}/>
+                <Route path="home" element={<TraineeDashBoard/>}/>
                 <Route path="/profile" element={<UserProfile/>}/>
             </Routes>
         </TraineeLayout>

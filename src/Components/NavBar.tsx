@@ -12,6 +12,7 @@ export default function Navbar() {
     const navigate = useNavigate();
 
     const handleLogout = () => {
+        localStorage.clear();
         navigate('/');
     };
     //const userText = authState.isAuthenticated
@@ -33,7 +34,7 @@ export default function Navbar() {
                         </div>
                         <NavigationStyledDiv>
                             <div className="flex-container">
-                            <Link to={''}>Home</Link>
+                            <Link to={'home'}>Home</Link>
                             </div>
                         </NavigationStyledDiv>
                         <NavigationStyledDiv>
