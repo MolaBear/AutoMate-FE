@@ -81,7 +81,10 @@ const  Table = () => {
                 trainerPhone ={`${user.phone}`}
                 />
                </TableCell>
-               <TableCell>{`${user.name.first} ${user.name.last}`}</TableCell>
+               <TableCell>
+                  <tr>Power Skills</tr>
+                  {`${user.name.first} ${user.name.last}`}
+              </TableCell>
                <TableCell>{user.registered.date}</TableCell>
                <TableCell>{user.dob.age}</TableCell>
                <TableCell>{user.registered.age}</TableCell>

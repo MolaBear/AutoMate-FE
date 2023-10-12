@@ -1,107 +1,160 @@
 import React, { useState, useEffect } from 'react';
-import { AdminUsersView, Card, SessionsTable, StyledCheckbox, StyledSelect } from '../../../Components/Styled Components/AppStyle';
+import { AdminUsersView, Button, Card, SessionsTable, StyledCheckbox, StyledSelect } from '../../../Components/Styled Components/AppStyle';
 
 interface UserItem {
-  id: number;
-  name: string;
+  userId: number;
+  firstName: string;
   lastName: string;
-  online: boolean;
-  isActive: boolean;
-  role: string;
+  enabled: boolean;
+  roleId: number;
 }
 
-const dummyUsers: UserItem[] = [
-  { id: 1, name: 'John', lastName: 'Doe', online: true, isActive: true, role: 'User' },
-  { id: 2, name: 'Jane', lastName: 'Smith', online: false, isActive: false, role: 'Admin' },
-  { id: 3, name: 'Bob', lastName: 'Johnson', online: true, isActive: true, role: 'User' },
-];
+const API_URL = 'https://localhost:7184/api/User/GetAllUsers';
 
 const OnlineUsersView: React.FC = () => {
-  const [users, setUsers] = useState<UserItem[]>(dummyUsers);
+  const [users, setUsers] = useState<UserItem[] | null>(null);
+  const [editingUser, setEditingUser] = useState<number | null>(null);
+  const [newRole, setNewRole] = useState<string | null>(null);
+  const [inEditMode, setInEditMode] = useState(false);
 
   useEffect(() => {
-    const updateOnlineStatus = () => {
-      // Simulate users going online and offline randomly if they are active
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_URL);
+        if (response.ok) {
+          const data = await response.json() as UserItem[];
+          setUsers(data);
+          // Start the interval for updating online status after fetching initial data
+          const intervalId = setInterval(updateOnlineStatus, 5000);
+          return () => {
+            clearInterval(intervalId); // Clean up on unmount
+          };
+        } else {
+          console.error('Failed to fetch data.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+      // Ensure that a value is returned even in error cases
+      return undefined;
+    };
+  
+    fetchData();
+  }, []);
+  
+
+  const updateOnlineStatus = () => {
+    if (users) {
       const updatedUsers = users.map((user) => ({
         ...user,
-        online: user.isActive && Math.random() < 0.5,
+        enabled: user.enabled && Math.random() < 0.5,
       }));
       setUsers(updatedUsers);
-    };
-
-    const intervalId = setInterval(updateOnlineStatus, 5000); // Update every 5 seconds
-
-    return () => clearInterval(intervalId); // Clean up on unmount
-  }, [users]);
+    }
+  };
 
   const handleToggleIsActive = (userId: number) => {
-    // Toggle the isActive property for the selected user
-    const updatedUsers = users.map((user) =>
-      user.id === userId ? { ...user, isActive: !user.isActive, online: false } : user
-    );
-    setUsers(updatedUsers);
+    setEditingUser(userId);
+    setInEditMode(true);
   };
 
-  const handleRoleChange = (userId: number, newRole: string) => {
-    // Update the role for the selected user
-    const updatedUsers = users.map((user) =>
-      user.id === userId ? { ...user, role: newRole } : user
-    );
-    setUsers(updatedUsers);
+  const handleRoleChange = (userId: number, role: string) => {
+    setEditingUser(userId);
+    setNewRole(role);
+    setInEditMode(true);
   };
 
-  const roleOptions = ['User', 'Admin', 'Manager']; // Define your role options here
+  const handleSave = (userId: number) => {
+    if (users !== null) {
+      const updatedUsers = users.map((user) => {
+        if (user.userId === userId) {
+          return {
+            ...user,
+            enabled: editingUser === userId, // Toggle the enabled property based on edit mode
+            roleId: roleOptions.indexOf(newRole || ''),
+          };
+        }
+        return user;
+      });
+      setUsers(updatedUsers);
+      setEditingUser(null);
+      setNewRole(null);
+      setInEditMode(false); // Exit edit mode after saving
+    }
+  };
+
+  const roleOptions = ['User', 'Trainee', 'Trainer', 'Admin', 'User'];
 
   return (
-    <div style={{
-      padding: '10px 0px 0px 260px'
-  }}>
-    <Card>
-      <div className="online-users">
-        <AdminUsersView>All Users</AdminUsersView>
-        <SessionsTable>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Last Name</th>
-              <th>Status</th>
-              <th>isActive</th>
-              <th>Enable</th>
-              <th>Role</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td>{user.name}</td>
-                <td>{user.lastName}</td>
-                <td className={user.online ? 'Online' : 'Offline'}>{user.online ? 'Online' : 'Offline'}</td>
-                <td>{user.isActive ? 'Active' : 'Inactive'}</td>
-                <td >
-                  <StyledCheckbox
-                    type="checkbox"
-                    checked={user.isActive}
-                    onChange={() => handleToggleIsActive(user.id)}
-                  />
-                </td>
-                <td>
-                  <StyledSelect
-                    value={user.role}
-                    onChange={(e) => handleRoleChange(user.id, e.target.value)}
-                  >
-                    {roleOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </StyledSelect>
-                </td>
+    <div style={{ padding: '10px 0px 0px 260px' }}>
+      <Card>
+        <div className="online-users">
+          <AdminUsersView>All Users</AdminUsersView>
+          <SessionsTable>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Last Name</th>
+                <th>Status</th>
+                <th>isActive</th>
+                <th>Role</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </SessionsTable>
-      </div>
-    </Card>
+            </thead>
+            <tbody>
+              {users !== null ? (
+                users.map((user) => (
+                  <tr key={user.userId}>
+                    <td>{user.firstName}</td>
+                    <td>{user.lastName}</td>
+                    <td className={user.enabled ? 'Online' : 'Offline'}>
+                      {user.enabled ? 'Online' : 'Offline'}
+                    </td>
+                    <td>
+                      {editingUser === user.userId ? (
+                        <StyledCheckbox
+                          type="checkbox"
+                          checked={editingUser === user.userId} // Handle checkbox based on edit mode
+                          onChange={() => handleToggleIsActive(user.userId)}
+                        />
+                      ) : (
+                        user.enabled ? 'Active' : 'Inactive'
+                      )}
+                    </td>
+                    <td>
+                      {editingUser === user.userId ? (
+                        <StyledSelect
+                          value={newRole || roleOptions[user.roleId]}
+                          onChange={(e) => setNewRole(e.target.value)}
+                        >
+                          {roleOptions.map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </StyledSelect>
+                      ) : (
+                        roleOptions[user.roleId]
+                      )}
+                    </td>
+                    <td>
+                      {editingUser === user.userId ? (
+                        <Button onClick={() => handleSave(user.userId)}>Save</Button>
+                      ) : (
+                        <Button onClick={() => handleToggleIsActive(user.userId)}>Edit</Button>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={6}>Loading...</td>
+                </tr>
+              )}
+            </tbody>
+          </SessionsTable>
+        </div>
+      </Card>
     </div>
   );
 };

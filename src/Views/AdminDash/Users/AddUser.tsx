@@ -83,7 +83,7 @@ export default function AddUser() {
       <Card>
         <h2>Add a User</h2>
         <Form>
-          <ToggleSwitch />
+          {/* <ToggleSwitch /> */}
           <div className="column">
             <FormField>
               <FormLabel>First Name:</FormLabel>
