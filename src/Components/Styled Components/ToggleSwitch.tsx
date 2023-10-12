@@ -19,18 +19,18 @@ const ToggleSwitchInput = styled.input`
   outline: none;
 
   &:before {
-    content: 'Trainee';
+    content: 'ID';
     position: absolute;
-    padding-left: 35%;
+    padding-left: 45%;
     top: 50%;
     transform: translateY(-50%);
     color: black;
   }
 
   &:after {
-    content: 'Trainer';
+    content: 'Passport';
     position: absolute;
-    padding-left: 35%;
+    padding-left: 25%;
     top: 50%;
     transform: translateY(-50%);
     color: white;

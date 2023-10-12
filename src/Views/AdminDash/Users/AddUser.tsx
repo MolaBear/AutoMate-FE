@@ -1,104 +1,212 @@
 import React, { useState } from 'react';
-import { Button, Card, Form, FormField, FormLabel, InputField1, RadioContainer, RadioInput, RadioLabel, StyledSelect, UserRoleSelect } from '../../../Components/Styled Components/AppStyle'
-import { Margin } from '@mui/icons-material';
+import { Button, Card, Form, FormField, FormLabel, InputField1, RadioContainer, RadioInput, RadioLabel, UserRoleSelect } from '../../../Components/Styled Components/AppStyle';
+import ToggleSwitch from '../../../Components/Styled Components/ToggleSwitch';
+import axios from 'axios';
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default function () {
+export default function AddUser() {
+  const [formData, setFormData] = useState({
+    fname: '',
+    lname: '',
+    empID: '',
+    pass: '',
+    userID: '',
+    phone: '',
+    email: '',
+    race: '',
+    gender: '',
+    jobTitle: '',
+  });
+
+  const {
+    fname,
+    lname,
+    empID,
+    pass,
+    userID,
+    phone,
+    email,
+    race,
+    gender,
+    jobTitle,
+  } = formData;
+
+  const API_URL = 'https://localhost:7184/api/User/AddUser';
+
+  const handleGenderChange = (e) => {
+    setFormData({
+      ...formData,
+      gender: e.target.value,
+    });
+  };
+
+  const AddUser = async () => {
+    try {
+      const response = await axios.post(API_URL, {
+        firstName: fname,
+        lastName: lname,
+        employeeNumber: empID,
+        password: pass,
+        identityNumber: userID,
+        emailAddress: email,
+        phoneNumber: phone,
+        race: race,
+        jobTitle: jobTitle,
+      });
+
+      const { isSuccess, error } = response.data;
+
+      if (isSuccess) {
+        alert('User successfully added');
+        // Clear the form fields after successful submission
+        setFormData({
+          fname: '',
+          lname: '',
+          empID: '',
+          pass: '',
+          userID: '',
+          phone: '',
+          email: '',
+          race: '',
+          gender: '',
+          jobTitle: '',
+        });
+      } else {
+        alert(error);
+      }
+    } catch (e) {
+      console.error('Error:', e);
+    }
+  };
+
   return (
-    <div style={{marginLeft: '250px'}}>
+    <div style={{ marginLeft: '250px' }}>
       <Card>
         <h2>Add a User</h2>
-          <Form>
-            <div className='column'>
-              <FormField>
-                <FormLabel>First Name:</FormLabel>
-                <InputField1 placeholder='First Name'/>
-              </FormField>
-              <FormField>
-                <FormLabel>Last Name:</FormLabel>
-                <InputField1 placeholder='Last Name'/>
-              </FormField>
-              <FormField>
-              <FormField>
-                <FormLabel>Phone Number:</FormLabel>
-                <InputField1 placeholder='Phone Number'/>
-              </FormField>
-                <FormLabel>Email Address:</FormLabel>
-                <InputField1 placeholder='Email Address'/>
-              </FormField>
-              <FormField>
-                <FormLabel>ID/Passport:</FormLabel>
-                <InputField1 placeholder='ID/Passport'/>
-              </FormField>
-              <FormField>
-                <FormLabel>Race:</FormLabel>
-                <UserRoleSelect placeholder='User Role'>
-                    <option hidden={true}>Select Race</option>
-                    <option>African</option>
-                    <option>Asian</option>
-                    <option>Indian</option>
-                    <option>White</option>
-                </UserRoleSelect>    
-                <RadioContainer>
-                  <FormLabel>Gender:</FormLabel>
-                  <RadioLabel>
-                    <RadioInput type="radio" name="gender" value="male" />
-                    Male
-                  </RadioLabel>
-                  <RadioLabel>
-                    <RadioInput type="radio" name="gender" value="female" />
-                    Female
-                  </RadioLabel>
-                  <RadioLabel>
-                    <RadioInput type="radio" name="gender" value="other" />
-                    Other
-                  </RadioLabel>
-                </RadioContainer>  
-              </FormField>      
-            </div>
-            <div className='column'>
-              <FormField>
-                <FormLabel>Emoployee Code:</FormLabel>
-                <InputField1 placeholder='Emoployee Code'/>
-              </FormField>
-              <FormField>
-                <FormLabel>Branch:</FormLabel>
-                <InputField1 placeholder='Branch'/>
-              </FormField>
-              <FormField>
-                  <FormLabel>Job Title:</FormLabel>
-                  <InputField1 placeholder='Job Titile'/>
-              </FormField>
-              <FormField>
+        <Form>
+          <ToggleSwitch />
+          <div className="column">
+            <FormField>
+              <FormLabel>First Name:</FormLabel>
+              <InputField1
+                placeholder="First Name"
+                value={fname}
+                onChange={(e) => setFormData({ ...formData, fname: e.target.value })}
+              />
+            </FormField>
+            <FormField>
+              <FormLabel>Last Name:</FormLabel>
+              <InputField1
+                placeholder="Last Name"
+                value={lname}
+                onChange={(e) => setFormData({ ...formData, lname: e.target.value })}
+              />
+            </FormField>
+            <FormField>
+              <FormLabel>Employee Code:</FormLabel>
+              <InputField1
+                placeholder="Employee Code"
+                value={empID}
+                onChange={(e) => setFormData({ ...formData, empID: e.target.value })}
+              />
+            </FormField>
+            <FormField>
+              <FormLabel>Password:</FormLabel>
+              <InputField1
+                placeholder="Default Password"
+                value={pass}
+                onChange={(e) => setFormData({ ...formData, pass: e.target.value })}
+              />
+            </FormField>
+            <FormField>
+              <FormLabel>ID/Passport:</FormLabel>
+              <InputField1
+                placeholder="ID/Passport"
+                value={userID}
+                onChange={(e) => setFormData({ ...formData, userID: e.target.value })}
+              />
+            </FormField>
+          </div>
+          <div className="column">
+            <FormField>
+              <FormLabel>Phone Number:</FormLabel>
+              <InputField1
+                placeholder="Phone Number"
+                value={phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              />
+            </FormField>
+            <FormField>
+              <FormLabel>Email Address:</FormLabel>
+              <InputField1
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+            </FormField>
+            <FormField>
+              <FormLabel>Race:</FormLabel>
+              <UserRoleSelect
+                placeholder="User Role"
+                value={race}
+                onChange={(e) => setFormData({ ...formData, race: e.target.value })}
+              >
+                <option hidden={true}>Select Race</option>
+                <option>African</option>
+                <option>Asian</option>
+                <option>Indian</option>
+                <option>White</option>
+              </UserRoleSelect>
               <RadioContainer>
-                  <FormLabel>Disability:</FormLabel>
-                  <RadioLabel>
-                    <RadioInput type="radio" name="disability" value="Yes" />
-                    Yes
-                  </RadioLabel>
-                  <RadioLabel>
-                    <RadioInput type="radio" name="disability" value="no" />
-                    No
-                  </RadioLabel>
-                </RadioContainer>
-                <FormLabel>Disability Description:</FormLabel>
-                <InputField1 height="90px" placeholder='Disability'/>
-              </FormField>
-              <FormField>
-                <FormLabel>User Role:</FormLabel>
-                <UserRoleSelect placeholder='User Role'>
-                    <option hidden={true}>Select User Role</option>
-                    <option>Trainee</option>
-                    <option>Trainer</option>
-                    <option>Admin</option>
-                </UserRoleSelect>
-              </FormField>
-            </div>
-            <div style={{margin: 'auto'}}>
-            <Button fontSize='16px' >Create new user</Button>
-            </div>
-          </Form>
+                <FormLabel>Gender:</FormLabel>
+                <RadioLabel>
+                  <RadioInput
+                    type="radio"
+                    name="gender"
+                    value="male"
+                    checked={gender === 'male'}
+                    onChange={handleGenderChange}
+                  />
+                  Male
+                </RadioLabel>
+                <RadioLabel>
+                  <RadioInput
+                    type="radio"
+                    name="gender"
+                    value="female"
+                    checked={gender === 'female'}
+                    onChange={handleGenderChange}
+                  />
+                  Female
+                </RadioLabel>
+                <RadioLabel>
+                  <RadioInput
+                    type="radio"
+                    name="gender"
+                    value="other"
+                    checked={gender === 'other'}
+                    onChange={handleGenderChange}
+                  />
+                  Other
+                </RadioLabel>
+              </RadioContainer>
+            </FormField>
+            <FormField>
+              <FormLabel>Job Title:</FormLabel>
+              <InputField1
+                placeholder="Job Title"
+                value={jobTitle}
+                onChange={(e) => setFormData({ ...formData, jobTitle: e.target.value })}
+              />
+            </FormField>
+          </div>
+          <div style={{ margin: 'auto' }}>
+            <Button fontSize="16px" onClick={AddUser}>
+              Create new user
+            </Button>
+          </div>
+        </Form>
+
       </Card>
     </div>
-  )
+  );
 }
