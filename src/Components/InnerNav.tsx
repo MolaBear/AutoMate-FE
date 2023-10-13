@@ -61,6 +61,11 @@ const InnerNav = () => {
                                     Add Users
                                 </div>
                             </SessionNavLink>
+                            <SessionNavLink to="edit">
+                                <div className="flex-container">
+                                    Edit Users Information
+                                </div>
+                            </SessionNavLink>
                         </Fragment>)}
                     </NavbarLeft>
                     </NavbarWrapper>
