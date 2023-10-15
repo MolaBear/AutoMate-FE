@@ -19,12 +19,12 @@ const Sidebar: React.FC = () => {
   return (
     <SidebarContainer>
       <SidebarHeader>AutoMate</SidebarHeader>
-      <SidebarLink to="home" >
+      {/* <SidebarLink to="home" >
         <div className="flex items-center">
           <HomeIcon className="w-5 h-5 text-white-500" />
           <span className="ml-2">Home</span>
         </div>
-      </SidebarLink>
+      </SidebarLink> */}
       <SidebarLink to="sessions/view">
         <div className="flex items-center">
           <AcademicCapIcon className="h-5 w-5 text-white-500" />

@@ -31,13 +31,6 @@ export const UsersInformation = () =>{
   
     const API_URL = 'https://localhost:7184/api/User/UpdateUser';
   
-    const handleGenderChange = (e) => {
-      setFormData({
-        ...formData,
-        gender: e.target.value,
-      });
-    };
-  
     const EditUser = async () => {
       try {
         const response = await axios.post(API_URL, {
@@ -65,14 +58,15 @@ export const UsersInformation = () =>{
     };
   
     return (
-      <div style={{ marginLeft: '250px' }}>
+      <div>
           <h2>Edit Users details</h2>
           <Form>
-            <div className="column">
+            <div>
               <FormField>
                 <FormLabel>First Name:</FormLabel>
                 <InputField1
                   placeholder="First Name"
+                  width='35em'
                   value={fname}
                   onChange={(e) => setFormData({ ...formData, fname: e.target.value })}
                 />
@@ -81,6 +75,7 @@ export const UsersInformation = () =>{
                 <FormLabel>Last Name:</FormLabel>
                 <InputField1
                   placeholder="Last Name"
+                  width='35em'
                   value={lname}
                   onChange={(e) => setFormData({ ...formData, lname: e.target.value })}
                 />
@@ -89,32 +84,25 @@ export const UsersInformation = () =>{
                 <FormLabel>Employee Code:</FormLabel>
                 <InputField1
                   placeholder="Employee Code"
+                  width='35em'
                   value={empID}
                   onChange={(e) => setFormData({ ...formData, empID: e.target.value })}
-                />
-              </FormField>
-              <FormField>
-                <FormLabel>Password:</FormLabel>
-                <InputField1
-                  placeholder="Default Password"
-                  value={pass}
-                  onChange={(e) => setFormData({ ...formData, pass: e.target.value })}
                 />
               </FormField>
               <FormField>
                 <FormLabel>ID/Passport:</FormLabel>
                 <InputField1
                   placeholder="ID/Passport"
+                  width='35em'
                   value={userID}
                   onChange={(e) => setFormData({ ...formData, userID: e.target.value })}
                 />
               </FormField>
-            </div>
-            <div className="column">
               <FormField>
                 <FormLabel>Phone Number:</FormLabel>
                 <InputField1
                   placeholder="Phone Number"
+                  width='35em'
                   value={phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 />
@@ -123,67 +111,13 @@ export const UsersInformation = () =>{
                 <FormLabel>Email Address:</FormLabel>
                 <InputField1
                   placeholder="Email Address"
+                  width='35em'
                   value={email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
               </FormField>
-              <FormField>
-                <FormLabel>Race:</FormLabel>
-                <UserRoleSelect
-                  placeholder="User Role"
-                  value={race}
-                  onChange={(e) => setFormData({ ...formData, race: e.target.value })}
-                >
-                  <option hidden={true}>Select Race</option>
-                  <option>African</option>
-                  <option>Asian</option>
-                  <option>Indian</option>
-                  <option>White</option>
-                </UserRoleSelect>
-                <RadioContainer>
-                  <FormLabel>Gender:</FormLabel>
-                  <RadioLabel>
-                    <RadioInput
-                      type="radio"
-                      name="gender"
-                      value="male"
-                      checked={gender === 'male'}
-                      onChange={handleGenderChange}
-                    />
-                    Male
-                  </RadioLabel>
-                  <RadioLabel>
-                    <RadioInput
-                      type="radio"
-                      name="gender"
-                      value="female"
-                      checked={gender === 'female'}
-                      onChange={handleGenderChange}
-                    />
-                    Female
-                  </RadioLabel>
-                  <RadioLabel>
-                    <RadioInput
-                      type="radio"
-                      name="gender"
-                      value="other"
-                      checked={gender === 'other'}
-                      onChange={handleGenderChange}
-                    />
-                    Other
-                  </RadioLabel>
-                </RadioContainer>
-              </FormField>
-              <FormField>
-                <FormLabel>Job Title:</FormLabel>
-                <InputField1
-                  placeholder="Job Title"
-                  value={jobTitle}
-                  onChange={(e) => setFormData({ ...formData, jobTitle: e.target.value })}
-                />
-              </FormField>
             </div>
-            <div style={{ margin: 'auto' }}>
+            <div style={{ textAlign: 'center'}}>
               <Button fontSize="16px" onClick={EditUser}>
                 Save Changes
               </Button>

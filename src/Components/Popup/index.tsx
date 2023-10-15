@@ -27,7 +27,8 @@ const PopUpContent = styled.div`
   // transform: translate(-50%, -50%);
   background-color: white;
   padding: 20px;
-  margin: 45px;
+  margin: 50px auto;
+  width: fit-content;
   border-radius: 5px;
   box-shadow: 0 0 2px rgb(159 49 255 / 9%);
 `;

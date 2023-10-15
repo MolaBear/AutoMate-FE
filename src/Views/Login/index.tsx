@@ -35,7 +35,7 @@ const Login: React.FC = () => {
 
       if (isSucess) {
         const { jwtTokenKey } = message;
-        // const decondedToken = jwt.decode(jwtTokenKey);
+        
         localStorage.setItem('jwtToken', jwtTokenKey);
         
         const decodedToken = jwt_decode<JwtPayload>(jwtTokenKey);

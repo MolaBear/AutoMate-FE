@@ -27,29 +27,8 @@ const EditUsersProfile: React.FC = () => {
   const [searchDate, setSearchDate] = useState('');
   const [isPopUpOpen, setPopUpOpen] = useState(false);
 
-  useEffect(() => {
-    const updateOnlineStatus = () => {
-      // Simulate users going online and offline randomly if they are active
-      const updatedUsers = users.map((user) => ({
-        ...user,
-        online: user.isActive && Math.random() < 0.5,
-      }));
-      setUsers(updatedUsers);
-    };
 
-    const intervalId = setInterval(updateOnlineStatus, 5000); // Update every 5 seconds
-
-    return () => clearInterval(intervalId); // Clean up on unmount
-  }, [users]);
-
-  const handleToggleIsActive = (userId: number) => {
-    // Toggle the isActive property for the selected user
-    const updatedUsers = users.map((user) =>
-      user.id === userId ? { ...user, isActive: !user.isActive, online: false } : user
-    );
-    setUsers(updatedUsers);
-  };
-
+  const API_URL = 'https://localhost:7184/api/User/GetUserInformation';
 
   const handleSearch = (searchQuery: string) => {
     // Filter users based on the search query
@@ -87,10 +66,13 @@ const EditUsersProfile: React.FC = () => {
             <tbody>
               {filteredUsers.map((user) => (
                 <tr key={user.id}>
-                  <TableCell>{user.name}</TableCell>
-                  <TableCell>{user.lastName}</TableCell>
-                  <TableCell className={user.online ? 'Online' : 'Offline'}>
-                    {user.online ? 'Online' : 'Offline'}
+                  <TableCell>Name</TableCell>
+                  <TableCell>Last Name</TableCell>
+                  <TableCell className={
+                    // isOnline 
+                    true
+                     ? 'Online' : 'Offline'}>
+                    {/* {user.online ? 'Online' : 'Offline'} */}
                   </TableCell>
                   <TableCell>
                   <button

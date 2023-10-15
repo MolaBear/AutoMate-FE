@@ -31,7 +31,7 @@ transition-timing-function: ease;
 outline: none;
 font-family: "Roboto","Helvetica","Arial",sans-serif;
   height: ${(props) => (props.height ? `${props.height}` : '')};
-  font-size: ${(props) => (props.fontSize ? `${props.fontSize}` : '18px')};
+  font-size: ${(props) => (props.fontSize ? `${props.fontSize}` : '')};
 
     &:hover {
     border: 1px solid rgb(109 4 203/ 82%);
@@ -52,6 +52,14 @@ font-family: "Roboto","Helvetica","Arial",sans-serif;
     }
   `;
 
+  export const InputFieldReadOnly = styled.input`
+  padding: 8px 22px;
+  width: 80%;
+  display: block;
+  border-radius: 11px;
+  border: 1.5px solid #959595;
+  background-color: #f3f3f3;
+  `;
 
   export const UserRoleSelect = styled.select<InputFieldProps>`
 padding: 8px 22px;
@@ -66,7 +74,7 @@ transition-timing-function: ease;
 outline: none;
 font-family: "Roboto","Helvetica","Arial",sans-serif;
   height: ${(props) => (props.height ? `${props.height}` : '')};
-  font-size: ${(props) => (props.fontSize ? `${props.fontSize}` : '18px')};
+  font-size: ${(props) => (props.fontSize ? `${props.fontSize}` : '')};
 
     &:hover {
     border: 1px solid rgb(109 4 203/ 82%);
