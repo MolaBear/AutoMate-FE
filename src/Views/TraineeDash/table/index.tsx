@@ -1,27 +1,35 @@
 import { useEffect, useState } from 'react';
-import { User, fetchUsers } from '../../../Services/data/userApi';
+import { User, fetchUserSession, fetchUsers } from '../../../Services/data/userApi';
 import React from 'react';
 import { SessionsTable, THead, TableCell, TableContainer, TableHeader, TableRow } from '../../../Components/Styled Components/AppStyle';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Avatar } from '../../../Components/Avatar';
 import PopUp from '../../../Components/Popup';
 import SignRegister from './SignLogic';
+import { UserSessions } from '../../../Services/data/Users/UserProfileDTO';
 
 const  Table = () => {
-  const [users, setUsers] = useState<User[]>([]);
+  const [session, setSession] = useState<UserSessions[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isPopUpOpen, setPopUpOpen] = useState(false);
 
   useEffect(() => {
-    fetchUsers()
-      .then((response) => setUsers(response.data.results))
+    const userId = 9;
+    fetchUserSession(userId)
+      .then((response) => {
+        if (response.data && response.data.message) {
+          setSession(response.data.message);
+        } else {
+          console.error("No results found in the response data");
+        }
+      })
       .catch((error) => console.error(error));
   }, []);
 
-  // Filter users based on the search query
-  const filteredUsers = users.filter((user) => {
-    const fullName = `${user.name.first} ${user.name.last}`;
-    return fullName.toLowerCase().includes(searchQuery.toLowerCase());
+
+  const filteredUsers = session.filter((session) => {
+    const sessionName = `${session.sessionName}`;
+    return sessionName.toLowerCase().includes(searchQuery.toLowerCase());
   });  
 
   const handleSearchInputChange = (event) => {
@@ -70,24 +78,25 @@ const  Table = () => {
          </THead>
          <tbody>
          {filteredUsers.length > 0 ? (
-            filteredUsers.map((user, index) => (
+            filteredUsers.map((session, index) => (
              <TableRow key={index}>
                <TableCell>
-                <Avatar
+                {/* <Avatar
                 imgSrc = {user.picture.thumbnail}
-                altText ={`${user.name.first} ${user.name.last}`}
+                altText ={`${session.trainerId} ${user.name.last}`}
                 trainerName = {`${user.name.first}`}
                 trainerEmail ={`${user.email}`}
                 trainerPhone ={`${user.phone}`}
-                />
+                /> */}
                </TableCell>
                <TableCell>
-                  <tr>Power Skills</tr>
-                  {`${user.name.first} ${user.name.last}`}
+                  {`${session.sessionName} `}
+                  {/* ${user.name.last} */}
+                  
               </TableCell>
-               <TableCell>{user.registered.date}</TableCell>
-               <TableCell>{user.dob.age}</TableCell>
-               <TableCell>{user.registered.age}</TableCell>
+               <TableCell>{session.sessionDate}</TableCell>
+               <TableCell>{session.startTime}</TableCell>
+               <TableCell>{session.endTime}</TableCell>
                <TableCell>
                    <button 
                       className='action-button' 

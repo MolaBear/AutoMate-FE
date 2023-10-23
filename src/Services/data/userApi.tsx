@@ -1,4 +1,5 @@
-import { get, post, put, del } from './apiService';
+import { updateUserProfile } from './Users/UserServices';
+import { get, post, put, del, getUserSession } from './apiService';
 
 export interface User {
     gender: string
@@ -77,6 +78,11 @@ export interface User {
     thumbnail: string
   }
   
+///////Sessions//////
+export const fetchUserSession = (userId: number) => getUserSession(userId);
+
+///////Users////////
+export const updateUserInfo = (userId: number, userProfileData) => updateUserProfile(userId, userProfileData);
 
 export const fetchUsers = (count = 5) => get("", { results: count });
 export const createUser = (userData) => post('/users', userData);

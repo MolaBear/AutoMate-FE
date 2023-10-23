@@ -3,68 +3,62 @@ import React, { useEffect, useState } from 'react'
 import { UserProfileService } from '../../Services/data/UserProfileService';
 import { decodeJwtToken } from '../../Services/data/jwtToken';
 import axios from 'axios';
+import { updateUserInfo } from '../../Services/data/userApi';
 
 export default function UserProfile() {
-    const userService = new UserProfileService();
-    const [userProfile, setUserProfile] = useState({
-        userId: 0,
-        firstName: '',
-        lastName: '',
-        employeeNumber: '',
-        identityNumber: '',
-        emailAddress: '',
-        phoneNumber: '',
-        race: '',
-        gender:true,
-        disability: true,
-        jobTitle: '',
-        roleName: '',
-        branchName: '',
-        companyName: ''
-    });
-    
+  const [userProfile, setUserProfile] = useState({
+    userId: 0,
+    firstName: '',
+    lastName: '',
+    employeeNumber: '',
+    identityNumber: '',
+    emailAddress: '',
+    phoneNumber: '',
+    race: '',
+    gender: '',
+    disability: false, 
+    jobTitle: '',
+    roleName: '',
+    branchName: '',
+    companyName: ''
+  });
+
+  useEffect(() => {
+    loadUserProfile();
+  }, []);
+
+  const loadUserProfile = async () => {
+    try {
+      const userId = getUserId(); // Implement your own logic to get the user's ID
+      const response = await axios.get(`https://localhost:7184/api/User/GetUserProfile/${userId}`);
+      const userDetails = response.data;
+      setUserProfile(userDetails);
+    } catch (error) {
+      console.error('Error loading user profile:', error);
+    }
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await updateUserInfo(userProfile.userId, userProfile);
+      console.log('Data updated:', response.data);
+      // You may want to display a success message to the user
+    } catch (error) {
+      console.error('Error updating user profile:', error);
+      // You may want to display an error message to the user
+    }
+  };
+
+  const getUserId = () => {
     const token = localStorage.getItem('jwtToken') as string;
-    
     const decodedToken = decodeJwtToken(token);
-
-    useEffect(() => {
-        if (decodedToken) {
-            loadUserProfile(decodedToken.UserId);
-        } else {
-            console.error('Failed to decode JWT token.');
-        }
-    }, [decodedToken]);
-
-    async function loadUserProfile(userId: number) {
-        try {
-          axios.get('https://localhost:7184/api/User/GetUserProfile/'+userId).then((response)=>{
-                const userDetails = response.data;
-                setUserProfile(userDetails)
-          });
-
-        } catch (error) {
-          console.error(`Error loading user profile:`, error);
-        }
-      }
-
-      const handleFormSubmit = (event) => {
-        event.preventDefault();
-    
-        // Send the updated data to the API
-        axios.put('your-api-endpoint', userProfile).then((response) => {
-          console.log('Data updated:', response.data);
-        });
-      };
+    return decodedToken?.UserId;
+  };
 
   return (
     <div>
-        <Card>
-            <div style={{ textAlign: 'center', fontSize: '18px' }}>
-                <h2>Welcome to your user Profile</h2>
-                <p> Here you can find your user information This information is what will be sent when signing the register<br /><br />
-                <b>Please also upload your signature in the field below</b></p>
-            </div><br />
-            <Form>
+      <Form onSubmit={handleFormSubmit}>
                 <div className='column'>
                     <FormField>
                         <FormLabel>First Name:</FormLabel>
@@ -76,12 +70,15 @@ export default function UserProfile() {
                     </FormField>
                 <FormField>
                     <FormLabel>Phone Number:</FormLabel>
-                    <InputField1 defaultValue={userProfile.phoneNumber}
-                                onChange={(e) => setUserProfile({ ...userProfile, phoneNumber: e.target.value })}/>
+                    <InputField1 
+                        defaultValue={userProfile.phoneNumber}
+                        onChange={(e) => setUserProfile({ ...userProfile, phoneNumber: e.target.value })}/>
                 </FormField>
                 <FormField>
                     <FormLabel>Email Address:</FormLabel>
-                    <InputField1 defaultValue={userProfile.emailAddress}/>
+                    <InputField1 
+                        defaultValue={userProfile.emailAddress}
+                        onChange={(e) => setUserProfile({ ...userProfile, emailAddress: e.target.value })}/>
                 </FormField>
                 <FormField>    
                     <FormLabel>Gender:</FormLabel>
@@ -178,7 +175,10 @@ export default function UserProfile() {
                 </FormField>
                 <FormField>
                     <FormLabel>Job Title:</FormLabel>
-                    <InputField1 defaultValue={userProfile.jobTitle}/>
+                    <InputField1 
+                        defaultValue={userProfile.jobTitle}
+                        onChange={(e) => setUserProfile({ ...userProfile, jobTitle: e.target.value })}
+                        />
                 </FormField>
                 <FormField>
                     <FormLabel>Add Signature:</FormLabel>
@@ -186,10 +186,10 @@ export default function UserProfile() {
                 </FormField>
                 </div>
                 <div>
-                <Button type='submit' fontSize='16px' >Save Changes</Button>
+                <Button type='submit' fontSize='16px' onClick={handleFormSubmit}>Save Changes</Button>
                 </div>
-            </Form>
-        </Card>
+      </Form>
     </div>
-  )
+  );
 }
+

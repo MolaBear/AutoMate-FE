@@ -1,4 +1,4 @@
-import { UserProfile } from "./UserProfileDTO";
+import { UserProfile } from "./Users/UserProfileDTO";
 
 export class UserProfileService {
     async getUserProfile(userId: number): Promise<UserProfile> {

@@ -49,10 +49,12 @@ const Login: React.FC = () => {
         }
 
       } else {
-        console.log('Invalid credentials');
+      console.log('Invalid credentials');
+      alert('Invalid credentials');
       }
     } catch (error) {
       console.error('Login error:', error);
+      alert('Not Connected to server');
     }
   };
 

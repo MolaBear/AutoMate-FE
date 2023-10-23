@@ -129,9 +129,9 @@ return (
                       <SessionTableCell>{user.name.first}</SessionTableCell>
                       <SessionTableCell>{user.name.last}</SessionTableCell>
                       <SessionTableCell>{user.registered.age}</SessionTableCell>
-                      <SessionTableCell>{user.location.city}</SessionTableCell>
-                      <SessionTableCell>{user.id.value}</SessionTableCell>
-                      <SessionTableCell>{user.phone}</SessionTableCell>
+                      <SessionTableCell></SessionTableCell>
+                      <SessionTableCell></SessionTableCell>
+                      <SessionTableCell></SessionTableCell>
                       <SessionTableCell>
                         <RemoveButton onClick={() => handleRemoveUser(user.id.value)}>
                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
