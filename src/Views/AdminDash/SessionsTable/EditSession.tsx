@@ -4,7 +4,6 @@ import { PlusCircleIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { DatePicker, Space } from 'antd';
 import { User, fetchUsers } from '../../../Services/data/userApi';
 
-const { RangePicker } = DatePicker;
 
 const EditSessionForm = () => {
 

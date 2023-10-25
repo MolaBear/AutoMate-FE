@@ -1,7 +1,7 @@
 import { Button, Card, Form, FormField, FormLabel, InputField1, InputFieldReadOnly, Label1, RadioContainer, RadioInput, RadioLabel, UserRoleSelect } from '../../Components/Styled Components/AppStyle'
 import React, { useEffect, useState } from 'react'
 import { UserProfileService } from '../../Services/data/UserProfileService';
-import { decodeJwtToken } from '../../Services/data/jwtToken';
+import { decodeJwtToken, getUserId } from '../../Services/data/jwtToken';
 import axios from 'axios';
 import { updateUserInfo } from '../../Services/data/userApi';
 
@@ -29,7 +29,7 @@ export default function UserProfile() {
 
   const loadUserProfile = async () => {
     try {
-      const userId = getUserId(); // Implement your own logic to get the user's ID
+      const userId = getUserId();
       const response = await axios.get(`https://localhost:7184/api/User/GetUserProfile/${userId}`);
       const userDetails = response.data;
       setUserProfile(userDetails);
@@ -43,18 +43,11 @@ export default function UserProfile() {
     try {
       const response = await updateUserInfo(userProfile.userId, userProfile);
       console.log('Data updated:', response.data);
-      // You may want to display a success message to the user
     } catch (error) {
       console.error('Error updating user profile:', error);
-      // You may want to display an error message to the user
     }
   };
 
-  const getUserId = () => {
-    const token = localStorage.getItem('jwtToken') as string;
-    const decodedToken = decodeJwtToken(token);
-    return decodedToken?.UserId;
-  };
 
   return (
     <div>

@@ -149,6 +149,11 @@ export const RadioInput = styled.input`
 export const SessionName = styled.input`
   font-size:23px;
 `;
+
+export const SessionDate =styled.input`
+
+`;
+
 export const CancelSessionButton = styled.button`
  &:hover{
   color: blueviolet;
@@ -340,7 +345,6 @@ export const NavbarContainer = styled.div`
   max-width: 7xl;
   padding: 0 2rem;
   
-  /* Add your other styles here */
 `;
 
 export const NavbarWrapper = styled.div`
@@ -502,10 +506,33 @@ export const SearchBarInput = styled.input`
   padding-right: 8%;
 `;
 
+export const SearchTextField = styled.text`
+  background: #fff;
+  border-radius: 16px;
+  border: none;
+  height: 26px;
+  width: 100%;
+  padding-left: 8%;
+  padding-right: 8%;
+`;
+
 export const AddButton = styled.button`
   display: flex;
   align-items: center;
-  padding: 12px 0px;
+  padding: 8px 15px;
+  background-color: #8800ff;
+  color: white;
+  border: none;
+  font-size: 15px;
+  border-radius: 4px;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+&:hover {
+  background-color: #4e0191; /* Darker Purple color on hover */
+}
   `;
   
 export const RemoveButton = styled.button`

@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
-import { User, fetchUserSession, fetchUsers } from '../../../Services/data/userApi';
+import { UserSessions, fetchUserSession } from '../../../Services/data/userApi';
 import React from 'react';
 import { SessionsTable, THead, TableCell, TableContainer, TableHeader, TableRow } from '../../../Components/Styled Components/AppStyle';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Avatar } from '../../../Components/Avatar';
 import PopUp from '../../../Components/Popup';
 import SignRegister from './SignLogic';
-import { UserSessions } from '../../../Services/data/Users/UserProfileDTO';
+import { getUserId } from '../../../Services/data/jwtToken';
+
 
 const  Table = () => {
   const [session, setSession] = useState<UserSessions[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isPopUpOpen, setPopUpOpen] = useState(false);
+  const userId = getUserId();
 
   useEffect(() => {
-    const userId = 9;
     fetchUserSession(userId)
       .then((response) => {
         if (response.data && response.data.message) {
@@ -26,7 +26,7 @@ const  Table = () => {
       .catch((error) => console.error(error));
   }, []);
 
-
+  
   const filteredUsers = session.filter((session) => {
     const sessionName = `${session.sessionName}`;
     return sessionName.toLowerCase().includes(searchQuery.toLowerCase());

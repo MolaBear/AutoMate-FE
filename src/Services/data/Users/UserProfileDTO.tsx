@@ -16,17 +16,5 @@ export interface UserProfile {
 }
 
 
-export interface UserSessions {
-  id: number 
-  sessionName: string
-  sessionDescription: string 
-  sessionType: true
-  trainerId: number
-  trinerSignature: string
-  sessionDate:string
-  startTime:string
-  endTime:string
-  isActive: true
-}
 
 

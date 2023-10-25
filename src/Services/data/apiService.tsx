@@ -5,8 +5,24 @@ const apiInstance = axios.create({
   });
   
   export const getUserSession = (userId: number) => {
+    // debugger
     const userSessionApi = `https://localhost:7184/api/Session/GetSessionsForUserId/${userId}`;
     return axios.get(userSessionApi);
+  };
+
+  export const getAllSessions = () => {
+    const SessionsApi = `https://localhost:7184/api/Session/GetAllSessions`;
+    return axios.get(SessionsApi);
+  };
+
+  export const getAllUpcomingSessions = () => {
+    const SessionsApi = `https://localhost:7184/api/Session/GetUpcomingSessions`;
+    return axios.get(SessionsApi);
+  };
+
+  export const postSession = (data) => {
+    const CreateSession = `https://localhost:7184/api/Session/CreateSession`;
+    return axios.post(CreateSession, data);
   };
   
   export const get = (url, params) => apiInstance.get(url, {params});

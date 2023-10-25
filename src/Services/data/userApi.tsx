@@ -1,5 +1,5 @@
 import { updateUserProfile } from './Users/UserServices';
-import { get, post, put, del, getUserSession } from './apiService';
+import { get, post, put, del, getUserSession, getAllSessions, postSession, getAllUpcomingSessions } from './apiService';
 
 export interface User {
     gender: string
@@ -78,8 +78,60 @@ export interface User {
     thumbnail: string
   }
   
+  export interface UserSessions {
+    id: number
+    sessionName: string
+    sessionDescription: string
+    sessionType: boolean
+    trainerId: number
+    trainerFirstName: string
+    trainerLastName: string
+    trainerContact: string
+    trainerEmail: string
+    trainerProfileImage: string
+    trinerSignature: string
+    sessionDate: string
+    startTime: string
+    endTime: string
+    isActive: boolean
+    sessionUsers: SessionUser[]
+  }
+  
+  export interface SessionUser {
+    id: number
+    sessionId: number
+    userId: number
+    knowledgeOfTopic: any
+    attitude: any
+    isSigned: boolean
+    signature: string
+    session: any
+  }
+
+  export interface NewSession{
+    trainerId: number
+    sessName: string
+    sessionDescription: string
+    sessionType: true
+    sessionDate: string
+    startTime: string
+    endTime: string
+    attendees:[]
+  }
+
+export interface UsersInSession {
+    userId: number;
+    firstName: string;
+    lastName: string;
+    employeeCode: string;
+    tableId: number;
+  }
+  
 ///////Sessions//////
-export const fetchUserSession = (userId: number) => getUserSession(userId);
+export const fetchUserSession = (userId) => getUserSession(userId);
+export const fetchAllSessions = () => getAllSessions();
+export const fetchAllComingSessions = () => getAllUpcomingSessions();
+export const createSession = (userData) => postSession(userData);
 
 ///////Users////////
 export const updateUserInfo = (userId: number, userProfileData) => updateUserProfile(userId, userProfileData);

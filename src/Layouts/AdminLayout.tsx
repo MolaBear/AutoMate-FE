@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 // import Alert from './components/Alert';
 import Footer from '../Components/Footer'
-import NavBar from '../Components/NavBar';
 import Sidebar from '../Components/Sidebar/sidebar';
 import AdminHeader from '../Views/AdminDash/AdminHeader/adminHeader';
 

@@ -15,3 +15,10 @@ export function decodeJwtToken(token: string): JwtPayload | null {
     return null;
   }
 }
+
+export const getUserId = () => {
+  const token = localStorage.getItem('jwtToken') as string;
+  const decodedToken = decodeJwtToken(token);
+  return decodedToken?.UserId;
+};
+
