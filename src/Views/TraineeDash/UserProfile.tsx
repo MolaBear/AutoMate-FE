@@ -1,195 +1,117 @@
-import { Button, Card, Form, FormField, FormLabel, InputField1, InputFieldReadOnly, Label1, RadioContainer, RadioInput, RadioLabel, UserRoleSelect } from '../../Components/Styled Components/AppStyle'
-import React, { useEffect, useState } from 'react'
-import { UserProfileService } from '../../Services/data/UserProfileService';
-import { decodeJwtToken } from '../../Services/data/jwtToken';
-import axios from 'axios';
-import { updateUserInfo } from '../../Services/data/userApi';
+import { useForm } from "react-hook-form";
+import { ZodType, z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+//import SaveChangeModal from "./SaveChangeModal";
+import './UserProfile.css'
 
-export default function UserProfile() {
-  const [userProfile, setUserProfile] = useState({
-    userId: 0,
-    firstName: '',
-    lastName: '',
-    employeeNumber: '',
-    identityNumber: '',
-    emailAddress: '',
-    phoneNumber: '',
-    race: '',
-    gender: '',
-    disability: false, 
-    jobTitle: '',
-    roleName: '',
-    branchName: '',
-    companyName: ''
+interface Props {
+  title: string;
+  text: string;
+  username: string | null; 
+}
+type FormData = {
+  Branch: string;
+  PhoneNumber: string;
+  Signature: File;
+  
+};
+
+
+const UserProfile= ({ title, text }: Props) => {
+  
+  
+  const phoneRegex = new RegExp(
+    /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
+  );
+  const allowedFileTypes = /\.(png|jpeg|jpg|gif)$/i;
+
+  const schema: ZodType<FormData> = z.object({
+    Branch: z.string().nonempty({ message: "Branch is required." }),
+    PhoneNumber: z.string().min(10).regex(phoneRegex, 'Invalid Number!'),
+    Signature: z.custom<File>((value) => {
+      if (!value) {
+        return false; // File is required, so return false if it's null
+      }
+
+      return allowedFileTypes; // Check if the file name matches the allowed file types
+    }, {
+      message: "Invalid file type. Only PNG, JPEG, JPG, and GIF files are allowed.",
+    }),
   });
 
-  useEffect(() => {
-    loadUserProfile();
-  }, []);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const loadUserProfile = async () => {
-    try {
-      const userId = getUserId(); // Implement your own logic to get the user's ID
-      const response = await axios.get(`https://localhost:7184/api/User/GetUserProfile/${userId}`);
-      const userDetails = response.data;
-      setUserProfile(userDetails);
-    } catch (error) {
-      console.error('Error loading user profile:', error);
-    }
+  const submitData = (data: FormData) => {
+    //Remove the bellow and send data to the server
+   // <SaveChangeModal onClose={()=> console.log("Close Modal")} onConfirm={()=>console.log("Success")}/>
+    console.log("It worked", data);
   };
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await updateUserInfo(userProfile.userId, userProfile);
-      console.log('Data updated:', response.data);
-      // You may want to display a success message to the user
-    } catch (error) {
-      console.error('Error updating user profile:', error);
-      // You may want to display an error message to the user
-    }
-  };
-
-  const getUserId = () => {
-    const token = localStorage.getItem('jwtToken') as string;
-    const decodedToken = decodeJwtToken(token);
-    return decodedToken?.UserId;
-  };
-
+  
   return (
-    <div>
-      <Form onSubmit={handleFormSubmit}>
-                <div className='column'>
-                    <FormField>
-                        <FormLabel>First Name:</FormLabel>
-                        <InputFieldReadOnly value={userProfile.firstName} readOnly/>
-                    </FormField>
-                    <FormField>
-                        <FormLabel>Last Name:</FormLabel>
-                        <InputFieldReadOnly value={userProfile.lastName} readOnly />
-                    </FormField>
-                <FormField>
-                    <FormLabel>Phone Number:</FormLabel>
-                    <InputField1 
-                        defaultValue={userProfile.phoneNumber}
-                        onChange={(e) => setUserProfile({ ...userProfile, phoneNumber: e.target.value })}/>
-                </FormField>
-                <FormField>
-                    <FormLabel>Email Address:</FormLabel>
-                    <InputField1 
-                        defaultValue={userProfile.emailAddress}
-                        onChange={(e) => setUserProfile({ ...userProfile, emailAddress: e.target.value })}/>
-                </FormField>
-                <FormField>    
-                    <FormLabel>Gender:</FormLabel>
-                    {/* <RadioContainer>
-                        <RadioLabel>
-                            <RadioInput
-                                type="radio"
-                                name="gender"
-                                value="male"
-                                checked={userProfile.gender === 'male'}
-                                readOnly
-                            />
-                            Male
-                        </RadioLabel>
-                        <RadioLabel>
-                            <RadioInput
-                                type="radio"
-                                name="gender"
-                                value="female"
-                                checked={userProfile.gender === 'female'}
-                                readOnly
-                            />
-                            Female
-                        </RadioLabel>
-                        <RadioLabel>
-                            <RadioInput
-                                type="radio"
-                                name="gender"
-                                value="other"
-                                checked={userProfile.gender === 'other'}
-                                readOnly
-                            />
-                            Other
-                        </RadioLabel>
-                    </RadioContainer> */}
-                </FormField>
-                <FormField>
-                    <FormLabel>ID/Passport:</FormLabel>
-                    <InputFieldReadOnly value={userProfile.identityNumber} readOnly/>
-                </FormField>
-                    <FormField>
-                    <FormLabel>Race:</FormLabel>
-                    <UserRoleSelect
-                        value={userProfile.race}>
-                        <option hidden={true}>Select Race</option>
-                        <option>African</option>
-                        <option>Asian</option>
-                        <option>Indian</option>
-                        <option>White</option>
-                        {/* Add other options as needed */}
-                    </UserRoleSelect>
-                </FormField>
-                <FormField>
-                <RadioContainer>
-                    <FormLabel>Disability:</FormLabel>
-                    <RadioLabel>
-                        <RadioInput 
-                            type="radio" 
-                            name="disability" 
-                            value="Yes"
-                            checked={userProfile.disability === true}
-                         />
-                            Yes
-                        </RadioLabel>
-                    <RadioLabel>
-                        <RadioInput  
-                            type="radio" 
-                            name="disability" 
-                            value="No"
-                            checked={userProfile.disability === false}/>
-                        No
-                    </RadioLabel>
-                    </RadioContainer>
-                </FormField>      
-                </div>
-                <div className='column'>
-                <FormField>
-                    <FormLabel>Disability Description:</FormLabel>
-                    <InputField1 height="90px" placeholder='Disability'/>
-                </FormField>
-                <FormField>
-                    <FormLabel>Emoployee Code:</FormLabel>
-                    <InputFieldReadOnly value={userProfile.employeeNumber} readOnly/>
-                </FormField>
-                <FormField>
-                    <FormLabel>Branch:</FormLabel>
-                    <UserRoleSelect
-                        value={userProfile.branchName}>
-                        <option hidden={true}>Select Branch</option>
-                        <option>JHB</option>
-                        <option>DBN</option>
-                        <option>CPT</option>
-                    </UserRoleSelect>
-                </FormField>
-                <FormField>
-                    <FormLabel>Job Title:</FormLabel>
-                    <InputField1 
-                        defaultValue={userProfile.jobTitle}
-                        onChange={(e) => setUserProfile({ ...userProfile, jobTitle: e.target.value })}
-                        />
-                </FormField>
-                <FormField>
-                    <FormLabel>Add Signature:</FormLabel>
-                    <InputField1 height="90px" placeholder='Signature'/>
-                </FormField>
-                </div>
-                <div>
-                <Button type='submit' fontSize='16px' onClick={handleFormSubmit}>Save Changes</Button>
-                </div>
-      </Form>
-    </div>
+    <form onSubmit={handleSubmit(submitData)}>
+      <h3>{title}</h3>
+      <p>{text}</p>
+
+      <div className="formContainer">
+        <div className="left-colunm">
+          <div>
+            <input type="text" placeholder="First Name" disabled />
+          </div>
+          <div>
+            <input type="text" placeholder="Last Name" disabled />
+          </div>
+          <div>
+            <select id="Branch" {...register("Branch")} defaultValue="">
+              <option disabled value="">
+                Select Branch
+              </option>
+              <option>Durban</option>
+              <option>Johannesburg</option>
+              <option>Cape Town</option>
+            </select>
+            {errors.Branch?.message && (
+              <div className="text-danger">{errors.Branch?.message} </div>
+            )}
+          </div>
+          <div>
+            <input type="text" placeholder="ID/Passport Number" disabled />
+          </div>
+        </div>
+
+        <div className="right-column">
+          <div>
+            <input type="text" placeholder="Employee Code" disabled />
+          </div>
+          <div>
+            <input
+              type="number"
+              id="PhoneNumber"
+              placeholder=" Phone Number"
+              {...register("PhoneNumber")}
+            />
+            {errors.PhoneNumber?.message && (
+              <div className="text-danger">{errors.PhoneNumber?.message} </div>
+            )}
+          </div>
+          <div>
+            <input className="signature" type="file" {...register("Signature")}  required/>
+            {errors.Signature?.message && (
+              <div className="text-danger">{errors.Signature?.message} </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <button className="wrap" type="submit" >
+        Save Changes
+      </button>
+    </form>
   );
-}
+};
+
+export default UserProfile;
 

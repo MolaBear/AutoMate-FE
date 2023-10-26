@@ -10,7 +10,8 @@ const TraineerRoutes = () => {
         <TraineeLayout>
             <Routes>
                 <Route path="home" element={<TraineeDashBoard/>}/>
-                <Route path="/profile" element={<UserProfile/>}/>
+                <Route path="/profile" element={<UserProfile title="" text="" username="User123" />} />
+
             </Routes>
         </TraineeLayout>
     );

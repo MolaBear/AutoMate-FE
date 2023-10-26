@@ -8,6 +8,9 @@ import { useNavigate } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
 import { InputField1, UserRoleSelect } from '../../Components/Styled Components/AppStyle';
 import Popup from 'reactjs-popup';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import './login.css'
 
 interface JwtPayload {
   RoleName: string;
@@ -16,6 +19,31 @@ interface JwtPayload {
 
 const API_URL = 'https://localhost:7184/api/User/LoginUser'; 
 const Login: React.FC = () => {
+  const formik = useFormik({
+    initialValues: {
+      employeeCode: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      employeeCode: Yup.string()
+      .required('Employee code is required')
+      .test('employeeCode', 'Invalid employee code', (value) => {
+        const employeeCodeRegex = /^(BT)(\d{4,10})$/;
+        return employeeCodeRegex.test(value!);
+      }),
+      password: Yup.string()
+      .required('Password is required')
+      .test('Password', 'Invalid Password', (value) => {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^\s]{8,}$/;
+        return passwordRegex.test(value!);
+      }),
+    }),
+    onSubmit: (values) => {
+      // method to submit
+      console.log('form values', values);
+      loginUser(values);
+    }
+  })
   
   const [empID, setEmpID] = useState("");
   const [pass, setPass] = useState("");
@@ -24,11 +52,12 @@ const Login: React.FC = () => {
   const [securityAns, setSecurityAns] = useState("");
   const navigate = useNavigate();
   
-  const loginUser = async () => {
+  const loginUser = async (values) => {
+    const { employeeCode, password } = values;
     try {
       const response = await axios.post(API_URL, {
-        EmployeeNumber: empID,
-        Password: pass,
+        EmployeeNumber: employeeCode,
+        Password: password,
       });
 
       const { message, isSucess } = response.data;
@@ -81,7 +110,7 @@ const Login: React.FC = () => {
       </div>
 
       <div className="split right">
-        <form className="login-form">
+        <form onSubmit={formik.handleSubmit} className="login-form">
             {/* <img 
                ref={imgRef}
                src="/Logo.gif"
@@ -92,27 +121,39 @@ const Login: React.FC = () => {
             className="input-field"
             label="Employee Code"
             color="secondary"
-            value={empID}
-            onChange={(e) => setEmpID(e.target.value)}
+            id="employeeCode"
+            value={formik.values.employeeCode}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             placeholder="BT0000"
             variant="outlined"
           />
+          {formik.touched.employeeCode && formik.errors.employeeCode ? (
+            <div> 
+              <span className="text-danger">{formik.errors.employeeCode}</span></div>
+          ): null}
 
           <TextField
             className="input-field"
             label="Password"
             color="secondary"
-            value={pass}
-            onChange={(e) => setPass(e.target.value)}
+            id="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             type="password"
             variant="outlined"
           />
+{formik.touched.password && formik.errors.password ? (
+            <div><span className="text-danger">{formik.errors.password}</span></div>
+          ): null}
 
           <Button
             style={{ marginBottom: "25px" }}
             id="submitBtn"
             color="primary"
-            onClick={loginUser}
+            type="submit"
+            
           >
             Submit
           </Button>
@@ -123,16 +164,16 @@ const Login: React.FC = () => {
                    <form onSubmit={handleSubmit} className="forgetForm">
                      <h2>Forgot Password</h2>
                      <label>
-                       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                     Enter your Employee Code and Security Question to reset your password
                      </label>
-                     <InputField1 value={email} onChange={(e) => setEmpID(e.target.value)} type="text" placeholder="Email Address" id="email" name="email" width="100%" />
+                     <InputField1 value={empID} onChange={(e) => setEmpID(e.target.value)} type="text" placeholder="Employee Code" id="employeeCode" name="employeeCode" width="100%" />
                      <br/>
                      <UserRoleSelect value={securityQ} onChange={(e) => setSecurityQ(e.target.value)} name="SecurityQ" id="SecurityQ" width="100%">
                        <option value="" disabled>Security Question</option>
-                       <option value="Q1">Question 1</option>
-                       <option value="Q2">Question 2</option>
-                       <option value="Q3">Question 3</option>
-                       <option value="Q4">Question 4</option>
+                       <option value="Q1">What elementary school did you attend?</option>
+                       <option value="Q2">What is your mother's maiden name?</option>
+                       <option value="Q3">What is the name of the town where you were born?</option>
+                       
                      </UserRoleSelect>
                      <InputField1 value={securityAns} onChange={(e) => setSecurityAns(e.target.value)} type="text" placeholder="Security Question Answer" id="securityAns" name="securityAns" width="100%"/>
                      <button type="submit" id="submitBtn">Reset Password</button> 

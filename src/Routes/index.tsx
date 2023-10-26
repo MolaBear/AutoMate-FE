@@ -5,7 +5,7 @@ import AdminRoutes from "./AdminRoutes";
 import TraineeRoutes from "./TraineeRoutes";
 import TrainerRoutes from "./TrainerRoutes";
 import SetPassword from "../Views/Login/SetNewPassword/SetNewPassword";
-import ProtectedRoute from "./ProtectedRoute";
+//import ProtectedRoute from "./ProtectedRoute";
 
 export const PageRoutes = () => {
   return (
@@ -15,25 +15,25 @@ export const PageRoutes = () => {
       <Route
         path="/trainee/*"
         element={
-          <ProtectedRoute requiredRole="Trainee">
+          //<ProtectedRoute requiredRole="Trainee">
             <TraineeRoutes/>
-          </ProtectedRoute>
+         // </ProtectedRoute>
         }
       />
       <Route
         path="/trainer/*"
         element={
-          <ProtectedRoute requiredRole="Trainer">
+          //<ProtectedRoute requiredRole="Trainer">
             <TrainerRoutes />
-          </ProtectedRoute>
+        //  </ProtectedRoute>
         }
       />
       <Route
         path="/admin/*"
         element={
-          <ProtectedRoute requiredRole="Admin">
+          //<ProtectedRoute requiredRole="Admin">
             <AdminRoutes />
-          </ProtectedRoute>
+         // </ProtectedRoute>
         }
       />
     </Routes>
