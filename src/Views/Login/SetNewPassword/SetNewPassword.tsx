@@ -58,7 +58,7 @@ function SetPassword() {
       </FormField>
       <UserRoleSelect style={{margin:'auto', marginBottom:"20px"}} width='50%' {...register("question")}>
         <option hidden> Security Question</option>
-        <option>What is your mother\'s maiden name?</option>
+        <option>What is your mother's maiden name?</option>
         <option>What elementary school did you attend?</option>
         <option>What is the name of the town you were born?</option>
       </UserRoleSelect>

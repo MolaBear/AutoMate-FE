@@ -1,5 +1,5 @@
 import { updateUserProfile } from './Users/UserServices';
-import { get, post, put, del, getUserSession, getAllSessions, postSession, getAllUpcomingSessions } from './apiService';
+import { get, post, put, del, getUserSession, getAllSessions, postSession, getAllUpcomingSessions, getSessionById } from './apiService';
 
 export interface User {
     gender: string
@@ -91,8 +91,11 @@ export interface User {
     trainerProfileImage: string
     trinerSignature: string
     sessionDate: string
+    displayDate: string
     startTime: string
+    displayStartTime: string
     endTime: string
+    displayEndTime: string
     isActive: boolean
     sessionUsers: SessionUser[]
   }
@@ -126,12 +129,55 @@ export interface UsersInSession {
     employeeCode: string;
     tableId: number;
   }
+
+  export interface ServerReply {
+    message: SessionMessage
+    isSucess: boolean
+    responseBody: any
+    error: any
+  }
+  
+  export interface SessionMessage {
+    id: number
+    sessionName: string
+    sessionDescription: string
+    sessionType: boolean
+    trainerId: number
+    trainerFirstName: string
+    trainerLastName: string
+    trainerContact: string
+    trainerEmail: string
+    trainerProfileImage: string
+    trinerSignature: string
+    sessionDate: string
+    startTime: string
+    endTime: string
+    isActive: boolean
+    sessionUsers: SessionUser[]
+  }
+  
+  export interface SessionUser {
+    id: number
+    sessionId: number
+    userId: number
+    knowledgeOfTopic: any
+    attitude: any
+    isSigned: boolean
+    signature: string
+    session: any
+  }
+  
   
 ///////Sessions//////
 export const fetchUserSession = (userId) => getUserSession(userId);
 export const fetchAllSessions = () => getAllSessions();
 export const fetchAllComingSessions = () => getAllUpcomingSessions();
+export const fetchSessionById = (sessionId) => getSessionById(sessionId);
+
+
+
 export const createSession = (userData) => postSession(userData);
+
 
 ///////Users////////
 export const updateUserInfo = (userId: number, userProfileData) => updateUserProfile(userId, userProfileData);

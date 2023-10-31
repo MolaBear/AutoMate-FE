@@ -19,6 +19,84 @@ interface TableContainerProps{
   maxHeight?:string;
 }
 
+export const LoginForm = styled.div`
+  position: relative;
+  width: 100%;
+  margin-top: 20%;
+
+  h2 {
+    margin: 0 0 15px 0;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  form{
+    padding: 0 10em;
+    margin: 0 0 10px 0;
+    text-align: left;
+    font-size: 15px;
+
+    &:last-child {
+      margin: 0;
+      padding-top: 3px;
+    }
+    color: #643e94;;
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+  label {
+    display: block;
+    width: 100%;
+    margin-bottom: 2px;
+    font-size:22px;
+    letter-spacing: 0.5px;
+
+    span {
+      color: #643e94;
+      padding-left: 2px;
+    }
+  }
+
+  input {
+    display: block;
+    width: 97%;
+    height: 35px;
+    margin-bottom:10px;
+    padding: 0 10px;
+    outline: none;
+    border: 1px solid #cccccc;
+    border-radius: 30px;
+
+    &:focus {
+      border-color: #9745ff;
+    }
+  }
+
+`;
+
+export const LoginButton = styled.button`
+  display: inline-block;
+  width: 97%;
+  margin-top: 5px;
+  padding: 7px;
+  color: #643e94;
+  font-size: 16px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid #643e94;
+  border-radius: 30px;
+  box-shadow: inset 0 0 0 0 #643e94;
+  transition: 0.3s;
+  -webkit-transition: 0.5s;
+
+  &:hover {
+    color: #ffffff;
+    background-color: #643e94;
+  }
+`;
+
 export const InputField1 = styled.input<InputFieldProps>`
 padding: 8px 22px;
 width: ${(props) => (props.width ? `${props.width}` : '80%')};
@@ -100,6 +178,8 @@ export const Label1 = styled.label`
     padding-top: 12px;
     margin-bottom:1%;
   `;
+
+  
 
 export const FormField = styled.div`
     font-family: unset;

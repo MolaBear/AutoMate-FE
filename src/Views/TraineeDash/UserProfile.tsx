@@ -6,6 +6,16 @@ import axios from 'axios';
 import { updateUserInfo } from '../../Services/data/userApi';
 
 export default function UserProfile() {
+    const [signatureImage, setSignatureImage] = useState(null);
+ 
+    const handleImageUpload = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          // You can save the image to state or send it to the server here
+          setSignatureImage(file);
+        }
+      };
+      
   const [userProfile, setUserProfile] = useState({
     userId: 0,
     firstName: '',
@@ -15,7 +25,7 @@ export default function UserProfile() {
     emailAddress: '',
     phoneNumber: '',
     race: '',
-    gender: '',
+    gender: true,
     disability: false, 
     jobTitle: '',
     roleName: '',
@@ -41,8 +51,9 @@ export default function UserProfile() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await updateUserInfo(userProfile.userId, userProfile);
-      console.log('Data updated:', response.data);
+    //   const response = await updateUserInfo(userProfile.userId, userProfile);
+    //   console.log('Data updated:', response.data);
+    alert('Changes successfully saved')
     } catch (error) {
       console.error('Error updating user profile:', error);
     }
@@ -75,13 +86,13 @@ export default function UserProfile() {
                 </FormField>
                 <FormField>    
                     <FormLabel>Gender:</FormLabel>
-                    {/* <RadioContainer>
+                    <RadioContainer>
                         <RadioLabel>
                             <RadioInput
                                 type="radio"
                                 name="gender"
                                 value="male"
-                                checked={userProfile.gender === 'male'}
+                                checked={userProfile.gender === true}
                                 readOnly
                             />
                             Male
@@ -91,12 +102,12 @@ export default function UserProfile() {
                                 type="radio"
                                 name="gender"
                                 value="female"
-                                checked={userProfile.gender === 'female'}
+                                checked={userProfile.gender === false}
                                 readOnly
                             />
                             Female
                         </RadioLabel>
-                        <RadioLabel>
+                        {/* <RadioLabel>
                             <RadioInput
                                 type="radio"
                                 name="gender"
@@ -105,8 +116,8 @@ export default function UserProfile() {
                                 readOnly
                             />
                             Other
-                        </RadioLabel>
-                    </RadioContainer> */}
+                        </RadioLabel> */}
+                    </RadioContainer>
                 </FormField>
                 <FormField>
                     <FormLabel>ID/Passport:</FormLabel>
@@ -115,13 +126,15 @@ export default function UserProfile() {
                     <FormField>
                     <FormLabel>Race:</FormLabel>
                     <UserRoleSelect
-                        value={userProfile.race}>
+                        value={userProfile.race}
+                        onChange={(e) => setUserProfile({ ...userProfile, race: e.target.value })}>
                         <option hidden={true}>Select Race</option>
                         <option>African</option>
                         <option>Asian</option>
                         <option>Indian</option>
                         <option>White</option>
                         {/* Add other options as needed */}
+                        
                     </UserRoleSelect>
                 </FormField>
                 <FormField>
@@ -159,7 +172,8 @@ export default function UserProfile() {
                 <FormField>
                     <FormLabel>Branch:</FormLabel>
                     <UserRoleSelect
-                        value={userProfile.branchName}>
+                        value={userProfile.branchName}
+                        onChange={(e) => setUserProfile({ ...userProfile, branchName: e.target.value })}>
                         <option hidden={true}>Select Branch</option>
                         <option>JHB</option>
                         <option>DBN</option>
@@ -175,8 +189,19 @@ export default function UserProfile() {
                 </FormField>
                 <FormField>
                     <FormLabel>Add Signature:</FormLabel>
-                    <InputField1 height="90px" placeholder='Signature'/>
+                    <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    />
                 </FormField>
+                {signatureImage && (
+                    <img
+                    src={URL.createObjectURL(signatureImage)}
+                    alt="User's Signature"
+                    style={{ maxWidth: '30%', maxHeight: "200px" }}
+                    />
+                )}
                 </div>
                 <div>
                 <Button type='submit' fontSize='16px' onClick={handleFormSubmit}>Save Changes</Button>

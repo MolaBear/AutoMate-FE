@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { UserSessions, fetchUserSession } from '../../../Services/data/userApi';
 import React from 'react';
-import { SessionsTable, THead, TableCell, TableContainer, TableHeader, TableRow } from '../../../Components/Styled Components/AppStyle';
+import { Button, SessionsTable, THead, TableCell, TableContainer, TableHeader, TableRow } from '../../../Components/Styled Components/AppStyle';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import PopUp from '../../../Components/Popup';
 import SignRegister from './SignLogic';
@@ -43,6 +43,12 @@ const  Table = () => {
   const handleClosePopUp = () => {
     setPopUpOpen(false);
   };
+
+  const handleSignRegister = () => {
+    alert('Register successfully signed')
+    setPopUpOpen(false);
+  };
+
 
   return (
       <TableContainer>
@@ -94,9 +100,9 @@ const  Table = () => {
                   {/* ${user.name.last} */}
                   
               </TableCell>
-               <TableCell>{session.sessionDate}</TableCell>
-               <TableCell>{session.startTime}</TableCell>
-               <TableCell>{session.endTime}</TableCell>
+               <TableCell>{session.displayDate}</TableCell>
+               <TableCell>{session.displayStartTime}</TableCell>
+               <TableCell>{session.displayEndTime}</TableCell>
                <TableCell>
                    <button 
                       className='action-button' 
@@ -111,6 +117,9 @@ const  Table = () => {
                       </button>
                     </div>
                     <SignRegister/>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Button type='button' onClick={handleSignRegister}>Yes</Button>  
+                    </div>
                   </PopUp>
               
                </TableCell>

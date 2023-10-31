@@ -4,11 +4,14 @@ import { PlusCircleIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { DatePicker, Space } from 'antd';
 import { User, fetchUsers } from '../../../Services/data/userApi';
 
+interface EditSessionProps {
+  SessionId: number;
+}
 
-const EditSessionForm = () => {
-
+const EditSessionForm: React.FC<EditSessionProps> = ({ SessionId })=> {
+    console.log(SessionId)
+    
     const [users, setUsers] = useState<User[]>([]);
-
     useEffect(() => {
       fetchUsers()
         .then((response) => setUsers(response.data.results))

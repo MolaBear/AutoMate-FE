@@ -10,11 +10,11 @@ const SignRegister = () => {
       };
 
   return (
-    <form onSubmit={handleSubmit}  style={{ margin:'auto', textAlign: 'center', width:'60vh', height:'25vh'}}>
+    <form onSubmit={handleSubmit}  style={{ margin:'auto', textAlign: 'center', width:'60vh', height:'15vh'}}>
         <h2>Sign Register</h2>
         <p>Are you sure you want to sign the register?</p>
         <br/>
-        <Button>Yes</Button>        
+        {/* <Button>Yes</Button>         */}
     </form>
   )
 }

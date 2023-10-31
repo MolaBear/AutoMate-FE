@@ -91,9 +91,9 @@ const  EditSessionTable = () => {
                   <tr>{`${session.sessionName}`}</tr>
                   {`${session.trainerFirstName} ${session.trainerLastName}`}
               </TableCell>
-               <TableCell>{session.sessionDate}</TableCell>
-               <TableCell>{session.startTime}</TableCell>
-               <TableCell>{session.startTime}</TableCell>
+               <TableCell>{session.displayDate}</TableCell>
+               <TableCell>{session.displayStartTime}</TableCell>
+               <TableCell>{session.displayEndTime}</TableCell>
                <TableCell>
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                   <PencilIcon 
@@ -106,8 +106,8 @@ const  EditSessionTable = () => {
                         <XMarkIcon className="h-6 w-6 text-gray-500" />
                       </button>
                     </div>
-                    <EditSessionForm/>
-                  </PopUp>
+                    <EditSessionForm SessionId={session.id}/>
+                  </PopUp >
                   </div>
                </TableCell>
              </TableRow>

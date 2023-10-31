@@ -6,7 +6,7 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
-import { InputField1, UserRoleSelect } from '../../Components/Styled Components/AppStyle';
+import { InputField1, LoginButton, LoginForm, UserRoleSelect } from '../../Components/Styled Components/AppStyle';
 import Popup from 'reactjs-popup';
 
 interface JwtPayload {
@@ -32,7 +32,6 @@ const Login: React.FC = () => {
       });
 
       const { message, isSucess } = response.data;
-
       if (isSucess) {
         const { jwtTokenKey } = message;
         
@@ -64,7 +63,7 @@ const Login: React.FC = () => {
         console.log(empID);
     }
   
-      const imgRef = useRef<HTMLImageElement>(null);
+    const imgRef = useRef<HTMLImageElement>(null);
   
       useEffect(() => {
         if (imgRef.current) {
@@ -74,21 +73,28 @@ const Login: React.FC = () => {
         }
       }, []);
 
+      const handleResetPass = () =>{
+        navigate('setPass');
+      }
+
   return (
     <>
-      <div className="split left">
-        <label className="dvd">DVD</label>
+      <div className="split left" >
+      <img
+          className="appImage"
+          src="/login_img.gif"
+          alt="learning img"
+      /> 
       </div>
 
       <div className="split right">
-        <form className="login-form">
             {/* <img 
                ref={imgRef}
                src="/Logo.gif"
                className="appLogo"
                alt="logo"
                   /> */}
-          <TextField
+          {/* <TextField
             className="input-field"
             label="Employee Code"
             color="secondary"
@@ -115,32 +121,62 @@ const Login: React.FC = () => {
             onClick={loginUser}
           >
             Submit
-          </Button>
-
+          </Button> */}
+          
+        <LoginForm>
+              <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+                  <img src="/logo.png" className="mx-auto w-auto" alt="Hollywood Bets"></img>
+                  
+                  <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                  </div>
+              </div>
+          <form>
+              <label>
+                Employee Code<span>*</span>
+              </label>
+              <input 
+                    type="text" 
+                    placeholder="BT0000" 
+                    value={empID}
+                    onChange={(e) => setEmpID(e.target.value)} required 
+                    />
+              <label>
+                Password<span>*</span>
+              </label>
+              <input 
+                    type="password" 
+                    placeholder="Password" 
+                    value={pass}
+                    onChange={(e) => setPass(e.target.value)}
+                    required />
+            
+              <LoginButton type="button"  onClick={loginUser}>Login</LoginButton>
+          </form>
             <Popup trigger={<label id="forgotPass" style={{marginLeft: "60%", marginTop:"10px"}}>forgot password</label>} modal nested>
                <div className='modal'>
                  <div className='content'>
                    <form onSubmit={handleSubmit} className="forgetForm">
-                     <h2>Forgot Password</h2>
+                      <br/>
+                      <h2>Forgot Password</h2>
+                     <br/>
                      <label>
-                       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                     </label>
-                     <InputField1 value={email} onChange={(e) => setEmpID(e.target.value)} type="text" placeholder="Email Address" id="email" name="email" width="100%" />
+                       Please enter your Employee Code, Secuirty Question and Answer to reset your Password.
+                     </label><br/><br/>
+                     <InputField1 type="text" placeholder="Employee Code" id="email" name="email" width="100%" />
                      <br/>
                      <UserRoleSelect value={securityQ} onChange={(e) => setSecurityQ(e.target.value)} name="SecurityQ" id="SecurityQ" width="100%">
                        <option value="" disabled>Security Question</option>
-                       <option value="Q1">Question 1</option>
-                       <option value="Q2">Question 2</option>
-                       <option value="Q3">Question 3</option>
-                       <option value="Q4">Question 4</option>
+                        <option>What is your mother's maiden name?</option>
+                        <option>What elementary school did you attend?</option>
+                        <option>What is the name of the town you were born?</option>
                      </UserRoleSelect>
                      <InputField1 value={securityAns} onChange={(e) => setSecurityAns(e.target.value)} type="text" placeholder="Security Question Answer" id="securityAns" name="securityAns" width="100%"/>
-                     <button type="submit" id="submitBtn">Reset Password</button> 
+                     <button type="button" onClick={handleResetPass} id="submitBtn">Reset Password</button> 
                    </form> 
                  </div>
                </div>
              </Popup>
-        </form>
+        </LoginForm>
       </div>
     </>
   );

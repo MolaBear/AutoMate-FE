@@ -5,7 +5,7 @@ import PopUp from '../../../../Components/Popup';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import SessionRegister from './Register';
 // import { Router } from 'react-router-dom';
-
+ 
 interface SessionData {
   session_name: string
   date: string;
@@ -13,34 +13,38 @@ interface SessionData {
   // view: string;
   // Add more fields...
 }
-
+ 
 const sessionData: SessionData[] = [
-  { session_name: 'Powerskills', date: '2023-08-01', branch: 'DBN'},
-  { session_name: 'FICA', date: '2023-08-02', branch: 'JHB' },
+  { session_name: 'Powerskills', date: '2023-10-26', branch: 'DBN'},
+  { session_name: 'Powerskills', date: '2023-10-14', branch: 'JHB'},
+  { session_name: 'Powerskills', date: '2023-09-27', branch: 'DBN'},
+  { session_name: 'Business Administration', date: '2023-08-21', branch: 'CPT'},
   { session_name: 'Powerskills', date: '2023-08-03', branch: 'DBN'},
-  
+  { session_name: 'FICA', date: '2023-08-02', branch: 'JHB' },
+  { session_name: 'Leadership Training', date: '2023-08-03', branch: 'CPT'},
+ 
   // Add more data...
 ];
-
+ 
  const columns: Column<SessionData>[] = [
   { Header: 'SESSION NAME', accessor: 'session_name' },
    { Header: 'DATE', accessor: 'date' },
    { Header: 'BRANCH', accessor: 'branch' },
-  //  { 
-  //   Header: 'VIEW', 
+  //  {
+  //   Header: 'VIEW',
   //   Cell: e =>
-    
-  //   <a href={e.value}> {e.value} </a>,
-  //  accessor: 'view' }, 
    
- ]; 
-
-
-
+  //   <a href={e.value}> {e.value} </a>,
+  //  accessor: 'view' },
+   
+ ];
+ 
+ 
+ 
 const SessionHistoryTable: React.FC = () => {
   const [searchDate, setSearchDate] = useState('');
   const [isPopUpOpen, setPopUpOpen] = useState(false);
-  
+ 
   const {
     getTableProps,
     getTableBodyProps,
@@ -52,27 +56,27 @@ const SessionHistoryTable: React.FC = () => {
     data: sessionData.filter((session) => {
       return(
       session.date.includes(searchDate)
-    
+   
     );
   }),
 },
-
+ 
 );
-
+ 
 const handlePencilIconClick = () => {
   setPopUpOpen(true);
 };
-
+ 
 const handleClosePopUp = () => {
   setPopUpOpen(false);
 };
-
-  
-
+ 
+ 
+ 
   return (
     <div style={{marginLeft: '250px'}} >
       <Card>
-        <h2>All My Sessions</h2>
+        <h2>All Sessions</h2>
           <InputField1
             width='18%'
             fontSize='15px'
@@ -102,19 +106,7 @@ const handleClosePopUp = () => {
                       return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
                     })}
                     <td>
-                        <button
-                            className="h-6 w-6 text-gray-500 hover:text-purple-500 cursor-pointer" 
-                            onClick={handlePencilIconClick}
-                            style={{width: "fit-content"}}
-                        > View Session</button>
-                        <PopUp isOpen={isPopUpOpen} onClose={handleClosePopUp}>
-                          <div style={{ display: 'flex', justifyContent: 'right', alignItems: 'center' }}>
-                            <button onClick={handleClosePopUp}>
-                              <XMarkIcon className="h-6 w-6 text-gray-500" />
-                            </button>
-                          </div>
-                          <SessionRegister/>
-                        </PopUp>
+                        <SessionRegister/>
                     </td>
                   </tr>
                 );
@@ -125,5 +117,5 @@ const handleClosePopUp = () => {
     </div>
   );
 };
-
+ 
 export default SessionHistoryTable

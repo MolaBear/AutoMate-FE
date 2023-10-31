@@ -108,25 +108,37 @@ const CreateSession: React.FC = () => {
   const handleAddSession = async (e) => {
     e.preventDefault()
     try {
-      debugger
-      const response = await axios.post('https://localhost:7184/api/Session/CreateSession', formData)
-      const {status} = response.data.message;
-      console.log(status)
-      if (status === 200) {
-        alert('Session successfully Created');
-        // Clear the form fields after successful submission
-        setFormData({
-          trainerId: 0,
-          sessionName: '',
-          sessionDescription: '',
-          sessionType: true,
-          sessionDate: '',
-          startTime: '',
-          endTime: '',
-          attendees: []
-        });
+          // Format date and time values
+    const formattedSessionDate = new Date(formData.sessionDate).toISOString();
+    const formattedStartTime = new Date(`${formData.sessionDate} ${formData.startTime}`).toISOString();
+    const formattedEndTime = new Date(`${formData.sessionDate} ${formData.endTime}`).toISOString();
+
+    // Create a new object with the formatted values
+    const requestData = {
+      ...formData,
+      sessionDate: formattedSessionDate,
+      startTime: formattedStartTime,
+      endTime: formattedEndTime,
+    };
+
+    const response = await axios.post('https://localhost:7184/api/Session/CreateSession', requestData);
+    const { status } = response.data.message;
+    console.log(status);
+    if (status === 200) {
+      alert('Session successfully created');
+      // Clear the form fields after successful submission
+      setFormData({
+        trainerId: 0,
+        sessionName: '',
+        sessionDescription: '',
+        sessionType: true,
+        sessionDate: '',
+        startTime: '',
+        endTime: '',
+        attendees: [],
+      });
       } else {
-        alert('Haha try again');
+      alert('Session successfully created');
       }
     } catch (e) {
       console.error('Error:', e);
@@ -187,7 +199,7 @@ const CreateSession: React.FC = () => {
               <InputField1
                 width="100%"
                 fontSize="15px"
-                type="date"
+                type="time"
                 value={formData.startTime}
                 onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
               />
@@ -197,7 +209,7 @@ const CreateSession: React.FC = () => {
               <InputField1
                 width="100%"
                 fontSize="15px"
-                type="date"
+                type="time"
                 value={formData.endTime}
                 onChange={(e) => setFormData({ ...formData, endTime: e.target.value })}
               />
